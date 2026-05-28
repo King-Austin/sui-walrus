@@ -1,0 +1,97 @@
+import type { FileItem, MyListing, WalletOption } from './types';
+
+export const MOCK_FILES: FileItem[] = [
+  {
+    id: 1, title: 'Sui DeFi Research Paper',
+    description: 'Comprehensive analysis of DeFi protocols on Sui, covering yield farming strategies, liquidity pool mechanics, and on-chain risk assessment models. Includes backtested data from Q1–Q4 2025.',
+    type: 'pdf', size: '2.4 MB', price: 5,
+    seller: '0x7f3a9b21c4e8d05f6a3b12c9e4f7d2a1b8c3e5f2', sellerShort: '0x7f3a…b12c',
+    blobId: 'bAEKDJ3ma9Nz7qL4xP2wR8sT5vU6yB1cF0gH3iI',
+    kiosk: '0x9f2e8d1c3a5b7e4f62a1b9c3d7e2f4a8',
+    category: 'Research', sales: 12, views: 89, listed: '2d ago',
+    tags: ['DeFi', 'Sui', 'Yield'], verified: true,
+  },
+  {
+    id: 2, title: 'Walrus Protocol Dataset',
+    description: 'Raw storage performance metrics and node distribution data from the Walrus decentralized storage network. 90 days of blob upload/retrieval stats across 200+ nodes.',
+    type: 'csv', size: '45 MB', price: 15,
+    seller: '0x4a219b83c2d7f60e5a3b91c2d7f8e4a3b5c2d9e3', sellerShort: '0x4a21…9e3f',
+    blobId: 'bAEOPR7xk2Bt6mY8wQ5nS4hJ3iG9rE1lD0fF2',
+    kiosk: '0x8b1a3e5f92c4d6a7b2e1f3c5d8a4b7e2',
+    category: 'Dataset', sales: 7, views: 54, listed: '5d ago',
+    tags: ['Walrus', 'Storage', 'Metrics'], verified: false,
+  },
+  {
+    id: 3, title: 'NFT Collection Artwork Pack',
+    description: '800-piece generative NFT art collection source files. Includes layered PSD files, trait rarity tables, and metadata generation scripts. Ready to deploy on Sui.',
+    type: 'zip', size: '128 MB', price: 25,
+    seller: '0x2c894d7b6e3f1a5c8d2e9b4f7a1c3d5e8f2a6b4', sellerShort: '0x2c89…4d7b',
+    blobId: 'bAEMNK2jh5Wq9pR3vL8uI7oY6tE4sD0aF1gG3',
+    kiosk: '0x3c4d7e9a1b5f2c8d6e3a7b4f9c2d5e1a',
+    category: 'Art', sales: 3, views: 127, listed: '1d ago',
+    tags: ['NFT', 'Generative', 'Art'], verified: true,
+  },
+  {
+    id: 4, title: 'Crypto Trading Signals API',
+    description: 'Live trading signal JSON feed with historical backtests. Covers BTC, ETH, and SUI pairs with entry/exit points, confidence scores, and market regime classification.',
+    type: 'json', size: '1.2 MB', price: 8,
+    seller: '0x9b3c7f1e4a2d6b8e5c3f1a9d4b7e2c6a3f5d8b1', sellerShort: '0x9b3c…7f1e',
+    blobId: 'bAELPQ9sc8Vn1uF6kO3mX2gZ5hA7bC4dE9fF0',
+    kiosk: '0x5e6f2b4c8d1a7e3f9b2c6d4a8e5f1b3c',
+    category: 'Finance', sales: 31, views: 203, listed: '8d ago',
+    tags: ['Trading', 'Signals', 'API'], verified: true,
+  },
+  {
+    id: 5, title: 'Blockchain Dev Video Course',
+    description: '12-hour comprehensive course on building dApps on Sui using Move. Covers smart contracts, wallet integration, and Kiosk deployment from scratch.',
+    type: 'mp4', size: '850 MB', price: 40,
+    seller: '0x1e4d2a9c7f5b3e1d8c6a4b2f9e7d5c3a1b9e7f5', sellerShort: '0x1e4d…2a9c',
+    blobId: 'bAEIJK5td3Xo7gH0fN2iP6qQ8rR9sS1tT4uU5',
+    kiosk: '0x7g8h4c2e6a9b1d3f5e7c2a4b8d6e0f2c',
+    category: 'Education', sales: 18, views: 341, listed: '12d ago',
+    tags: ['Move', 'dApp', 'Course'], verified: true,
+  },
+  {
+    id: 6, title: 'Move Smart Contract Templates',
+    description: 'Production-ready Move module templates: token issuance, staking, governance modules, and custom Kiosk extensions. All audited and mainnet-tested.',
+    type: 'zip', size: '3.1 MB', price: 12,
+    seller: '0x6f8e3b4a1d9c5f2e7a3b8c4d6e1f5a2b9c7d3e5', sellerShort: '0x6f8e…3b4a',
+    blobId: 'bAEHGF8ue4Yp2iI1jM7kN3lO5mP9nQ6oR0pP1',
+    kiosk: '0x1i2j6d8e4b7c3f9a5d2e8f6b1c4d7e3a',
+    category: 'Code', sales: 45, views: 412, listed: '20d ago',
+    tags: ['Move', 'Templates', 'Kiosk'], verified: true,
+  },
+  {
+    id: 7, title: 'Move Language Handbook',
+    description: 'Complete reference for the Move language on Sui. Syntax guide, standard library docs, and 50+ annotated code examples covering advanced patterns.',
+    type: 'pdf', size: '5.8 MB', price: 6,
+    seller: '0x3a7b8c2d5e4f1a6b9c3d7e2f4a8b1c5d3e7f2a9', sellerShort: '0x3a7b…8c2d',
+    blobId: 'bAEDEF4vf5Zq3jJ2hK8iL1mM6nN0oO4pP7qQ9',
+    kiosk: '0x3k4l8f0g2c5d9e1a7b3f6c9d2e5f8a1b',
+    category: 'Research', sales: 22, views: 178, listed: '3d ago',
+    tags: ['Move', 'Reference', 'Docs'], verified: false,
+  },
+  {
+    id: 8, title: 'DeFi Protocol Analytics Q2 2026',
+    description: 'Quarterly analytics report covering TVL trends, volume metrics, and user growth across the top 15 Sui DeFi protocols, with 6-month forecasting models.',
+    type: 'pdf', size: '4.2 MB', price: 10,
+    seller: '0x5c2a6e9f3b1d7e4f8a2c5d9b1e6f3a7c4d8e2b5', sellerShort: '0x5c2a…6e9f',
+    blobId: 'bAEABC1wg6Ar4kK3eJ0fI9gH8hG7iF6jE5kD4',
+    kiosk: '0x5m6n0h2i4c8d3e7f1a5b9c2d6e4f8a3b',
+    category: 'Finance', sales: 9, views: 67, listed: '7d ago',
+    tags: ['DeFi', 'Analytics', 'Q2'], verified: false,
+  },
+];
+
+export const MY_LISTINGS: MyListing[] = [
+  { id: 101, title: 'Move Contract Audit Checklist', type: 'pdf', size: '0.9 MB', price: 7, sales: 14, revenue: 98, status: 'active', blobId: 'bAEXYZ9pm2Qr7sT4uU5vV6', listed: '4d ago', views: 93 },
+  { id: 102, title: 'Sui Testnet Faucet Config', type: 'json', size: '0.1 MB', price: 2, sales: 67, revenue: 134, status: 'active', blobId: 'bAEWVU8ql1Po6rS3tT0uU7', listed: '18d ago', views: 431 },
+  { id: 103, title: 'dApp Boilerplate v2', type: 'zip', size: '12 MB', price: 18, sales: 5, revenue: 90, status: 'delisted', blobId: 'bAEVUT7pk0On5qR2sS9tT8', listed: '32d ago', views: 78 },
+];
+
+export const WALLET_OPTIONS: WalletOption[] = [
+  { id: 'sui', name: 'Sui Wallet', subtitle: 'by Mysten Labs', color: '#4F9FFF' },
+  { id: 'martian', name: 'Martian', subtitle: 'Martian Wallet', color: '#FF6B35' },
+  { id: 'ethos', name: 'Ethos', subtitle: 'Ethos Network', color: '#8B5CF6' },
+  { id: 'suiet', name: 'Suiet', subtitle: 'Community Wallet', color: '#00E5A0' },
+];
