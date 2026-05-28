@@ -21,24 +21,21 @@ interface HeaderProps {
   setDirection: (d: Direction) => void;
 }
 
-function DirToggle({ direction, setDirection, mobile }: { direction: Direction; setDirection: (d: Direction) => void; mobile: boolean }) {
+function ThemeToggle({ direction, setDirection }: { direction: Direction; setDirection: (d: Direction) => void }) {
+  const isDark = direction === 'dark';
   return (
-    <div style={{ display: 'flex', gap: 2, background: 'var(--s2)', padding: 3, borderRadius: 8, border: '1px solid var(--border)', flexShrink: 0 }}>
-      {(['dir-a', 'dir-b'] as Direction[]).map(d => (
-        <button
-          key={d}
-          onClick={() => { setDirection(d); document.body.className = d; }}
-          style={{
-            padding: mobile ? '4px 9px' : '4px 12px', borderRadius: 6, fontSize: 11, fontWeight: 600,
-            background: direction === d ? 'var(--s3)' : 'none',
-            color: direction === d ? 'var(--accent)' : 'var(--t3)',
-            border: 'none', cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s',
-          }}
-        >
-          {d === 'dir-a' ? 'A' : 'B'}
-        </button>
-      ))}
-    </div>
+    <button
+      onClick={() => setDirection(isDark ? 'light' : 'dark')}
+      title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      style={{
+        width: 34, height: 34, borderRadius: 8, flexShrink: 0,
+        background: 'var(--s2)', border: '1px solid var(--border)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        cursor: 'pointer', transition: 'all 0.2s', fontSize: 16, lineHeight: 1,
+      }}
+    >
+      {isDark ? '☀️' : '🌙'}
+    </button>
   );
 }
 
@@ -48,13 +45,13 @@ export function Header({ page, setPage, wallet, onWalletClick, direction, setDir
   if (mobile) {
     return (
       <>
-        <header style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(7,9,15,0.92)', backdropFilter: 'blur(18px)', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', padding: '0 16px', height: 52, gap: 12 }}>
+        <header style={{ position: 'sticky', top: 0, zIndex: 100, background: 'color-mix(in srgb, var(--bg) 92%, transparent)', backdropFilter: 'blur(18px)', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', padding: '0 16px', height: 52, gap: 12 }}>
           <button onClick={() => setPage('marketplace')} style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'none', border: 'none', cursor: 'pointer', padding: 0, flexShrink: 0 }}>
             <Logo size={28}/>
             <span style={{ fontWeight: 700, fontSize: 14, color: 'var(--t1)', letterSpacing: -0.3 }}>SUI<span style={{ color: 'var(--accent)' }}>-Walrus</span></span>
           </button>
           <div style={{ flex: 1 }}/>
-          <DirToggle direction={direction} setDirection={setDirection} mobile={true}/>
+          <ThemeToggle direction={direction} setDirection={setDirection}/>
           {wallet ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'var(--s2)', border: '1px solid var(--border)', padding: '5px 10px', borderRadius: 8, flexShrink: 0 }}>
               <StatusDot/>
@@ -65,7 +62,7 @@ export function Header({ page, setPage, wallet, onWalletClick, direction, setDir
           )}
         </header>
 
-        <nav className="bottom-nav" style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 100, background: 'rgba(7,9,15,0.95)', backdropFilter: 'blur(18px)', borderTop: '1px solid var(--border)', display: 'flex', height: 60 }}>
+        <nav className="bottom-nav" style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 100, background: 'color-mix(in srgb, var(--bg) 95%, transparent)', backdropFilter: 'blur(18px)', borderTop: '1px solid var(--border)', display: 'flex', height: 60 }}>
           {NAV.map(n => (
             <button
               key={n.id}
@@ -83,7 +80,7 @@ export function Header({ page, setPage, wallet, onWalletClick, direction, setDir
   }
 
   return (
-    <header style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(7,9,15,0.88)', backdropFilter: 'blur(18px)', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', padding: '0 28px', height: 60, gap: tablet ? 16 : 28 }}>
+    <header style={{ position: 'sticky', top: 0, zIndex: 100, background: 'color-mix(in srgb, var(--bg) 88%, transparent)', backdropFilter: 'blur(18px)', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', padding: '0 28px', height: 60, gap: tablet ? 16 : 28 }}>
       <button onClick={() => setPage('marketplace')} style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'none', border: 'none', cursor: 'pointer', padding: 0, flexShrink: 0 }}>
         <Logo size={32}/>
         <div style={{ textAlign: 'left' }}>
@@ -104,7 +101,7 @@ export function Header({ page, setPage, wallet, onWalletClick, direction, setDir
         ))}
       </nav>
 
-      <DirToggle direction={direction} setDirection={setDirection} mobile={false}/>
+      <ThemeToggle direction={direction} setDirection={setDirection}/>
 
       {wallet ? (
         <div style={{ display: 'flex', alignItems: 'center', gap: 9, background: 'var(--s2)', border: '1px solid var(--border)', padding: '7px 13px', borderRadius: 'var(--card-radius)', flexShrink: 0 }}>

@@ -16,7 +16,7 @@ export function SuiWalrusApp() {
   const [page, setPage]               = useState<Page>('marketplace');
   const [wallet, setWallet]           = useState<WalletInfo | null>(null);
   const [walletModal, setWalletModal] = useState(false);
-  const [direction, setDirection]     = useState<Direction>('dir-a');
+  const [direction, setDirection]     = useState<Direction>('dark');
   const [selectedFile, setSelectedFile] = useState<FileItem | null>(null);
   const [purchasedFile, setPurchasedFile] = useState<FileItem | null>(null);
   const [purchaseTx, setPurchaseTx]   = useState<string | null>(null);
@@ -26,7 +26,7 @@ export function SuiWalrusApp() {
     try {
       const savedWallet = sessionStorage.getItem('sui_wallet');
       if (savedWallet) setWallet(JSON.parse(savedWallet));
-      const savedDir = (sessionStorage.getItem('sui_direction') ?? 'dir-a') as Direction;
+      const savedDir = (sessionStorage.getItem('sui_direction') ?? 'dark') as Direction;
       setDirection(savedDir);
       document.body.className = savedDir;
     } catch { /* ignore */ }
@@ -97,6 +97,7 @@ export function SuiWalrusApp() {
           <Upload
             wallet={wallet}
             onWalletRequired={() => setWalletModal(true)}
+            onNavigate={navigate}
           />
         )}
         {page === 'unlock' && (
@@ -115,17 +116,6 @@ export function SuiWalrusApp() {
           />
         )}
       </main>
-
-      {/* Direction label */}
-      <div style={{
-        position: 'fixed', bottom: mobile ? 68 : 16, left: 16,
-        background: 'var(--s2)', border: '1px solid var(--border)',
-        borderRadius: 8, padding: '4px 10px',
-        fontSize: 10, color: 'var(--t3)', fontFamily: 'var(--mono)',
-        pointerEvents: 'none', zIndex: 50, letterSpacing: 0.5,
-      }}>
-        {direction === 'dir-a' ? 'A · Meridian' : 'B · Neon Flux'}
-      </div>
 
       {walletModal && (
         <WalletModal onConnect={handleConnect} onClose={() => setWalletModal(false)}/>

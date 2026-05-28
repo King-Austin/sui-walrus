@@ -38,10 +38,11 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  transition: background 0.25s, color 0.25s;
 }
 
-/* ── Direction A: Meridian (clean + structured) ── */
-body.dir-a {
+/* ── Dark mode (default) ── */
+body.dark {
   background-image:
     linear-gradient(rgba(0,229,160,0.018) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0,229,160,0.018) 1px, transparent 1px);
@@ -55,22 +56,47 @@ body.dir-a {
   --glow-hover:        0 0 20px rgba(0,229,160,0.25);
 }
 
-/* ── Direction B: Neon Flux (bold + glowing) ── */
-body.dir-b {
+/* ── Light mode ── */
+body.light {
+  --bg:          #F4F7F2;
+  --s1:          #FFFFFF;
+  --s2:          #EDF1EB;
+  --s3:          #E0E6DE;
+  --border:      rgba(0,0,0,0.08);
+  --accent:      #00A86B;
+  --accent-dim:  rgba(0,168,107,0.1);
+  --accent-glo:  rgba(0,168,107,0.25);
+  --sui:         #2563EB;
+  --sui-dim:     rgba(37,99,235,0.1);
+  --t1:          #0F1C0D;
+  --t2:          #3D5A3A;
+  --t3:          #7A9677;
+  --danger:      #DC2626;
+  --warn:        #D97706;
+  --card-radius:       12px;
+  --btn-radius:        8px;
+  --card-border:       var(--border);
+  --card-shadow:       0 2px 8px rgba(0,0,0,0.06);
+  --card-hover-shadow: 0 8px 24px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,168,107,0.2);
+  --glow:              none;
+  --glow-hover:        0 0 16px rgba(0,168,107,0.2);
   background-image:
-    radial-gradient(ellipse 75% 45% at 50% 0%, rgba(0,229,160,0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 35% at 90% 80%, rgba(79,159,255,0.05) 0%, transparent 55%);
-  --card-radius:       4px;
-  --btn-radius:        2px;
-  --card-border:       rgba(0,229,160,0.18);
-  --card-shadow:       0 0 24px rgba(0,229,160,0.06), 0 4px 20px rgba(0,0,0,0.7);
-  --card-hover-shadow: 0 0 42px rgba(0,229,160,0.2), 0 0 0 1px rgba(0,229,160,0.45);
-  --glow:              0 0 12px rgba(0,229,160,0.4);
-  --glow-hover:        0 0 28px rgba(0,229,160,0.65);
+    linear-gradient(rgba(0,168,107,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,168,107,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-color: var(--bg);
+  color: var(--t1);
 }
 
-body.dir-b .text-accent { text-shadow: 0 0 18px rgba(0,229,160,0.6); }
-body.dir-b header       { border-bottom-color: rgba(0,229,160,0.12); }
+body.light header {
+  background: rgba(244,247,242,0.92) !important;
+  border-bottom-color: rgba(0,0,0,0.08);
+}
+
+body.light .bottom-nav {
+  background: rgba(244,247,242,0.96) !important;
+  border-top-color: rgba(0,0,0,0.08);
+}
 
 /* Scrollbar */
 ::-webkit-scrollbar          { width: 5px; height: 5px; }

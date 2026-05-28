@@ -20,9 +20,10 @@ const STEP_DOTS = ['Upload', 'Processing', 'Details', 'Publishing', 'Live'];
 interface UploadProps {
   wallet: WalletInfo | null;
   onWalletRequired: () => void;
+  onNavigate: (page: import('@/lib/types').Page) => void;
 }
 
-export function Upload({ wallet, onWalletRequired }: UploadProps) {
+export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
   const { mobile } = useViewport();
   const [step, setStep] = useState(0);
   const [file, setFile] = useState<File | null>(null);
@@ -265,7 +266,7 @@ export function Upload({ wallet, onWalletRequired }: UploadProps) {
           </div>
           <div style={{ display: 'flex', gap: 10 }}>
             <Btn variant="ghost" full onClick={reset} style={{ fontSize: 13 }}>List Another</Btn>
-            <Btn variant="primary" full style={{ fontSize: 13 }}>View Dashboard →</Btn>
+            <Btn variant="primary" full onClick={() => onNavigate('dashboard')} style={{ fontSize: 13 }}>View Dashboard →</Btn>
           </div>
         </div>
       )}

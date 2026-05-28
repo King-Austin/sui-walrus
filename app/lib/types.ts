@@ -46,4 +46,4 @@ export interface WalletOption {
 }
 
 export type Page = 'marketplace' | 'detail' | 'upload' | 'unlock' | 'dashboard';
-export type Direction = 'dir-a' | 'dir-b';
+export type Direction = 'dark' | 'light';
