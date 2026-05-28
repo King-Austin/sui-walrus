@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <title>SUI-Walrus · Decentralized File Marketplace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #07090F;
+      --s1:          #0D1420;
+      --s2:          #111D2E;
+      --s3:          #182538;
+      --border:      rgba(255,255,255,0.07);
+      --accent:      #00E5A0;
+      --accent-dim:  rgba(0,229,160,0.12);
+      --accent-glo:  rgba(0,229,160,0.3);
+      --sui:         #4F9FFF;
+      --sui-dim:     rgba(79,159,255,0.15);
+      --t1:          #EDF4FF;
+      --t2:          #7A9BBE;
+      --t3:          #3D5A7A;
+      --danger:      #FF4D6A;
+      --warn:        #FFB347;
+      --mono:        'JetBrains Mono', monospace;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--t1);
+      font-family: 'Space Grotesk', sans-serif;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+
+    /* ── Direction A: Meridian (clean + structured) ── */
+    body.dir-a {
+      background-image:
+        linear-gradient(rgba(0,229,160,0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,160,0.018) 1px, transparent 1px);
+      background-size: 48px 48px;
+      --card-radius:      12px;
+      --btn-radius:       8px;
+      --card-border:      var(--border);
+      --card-shadow:      0 2px 12px rgba(0,0,0,0.5);
+      --card-hover-shadow:0 8px 32px rgba(0,0,0,0.65), 0 0 0 1px rgba(0,229,160,0.18);
+      --glow:             none;
+      --glow-hover:       0 0 20px rgba(0,229,160,0.25);
+    }
+
+    /* ── Direction B: Neon Flux (bold + glowing) ── */
+    body.dir-b {
+      background-image:
+        radial-gradient(ellipse 75% 45% at 50% 0%, rgba(0,229,160,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 35% at 90% 80%, rgba(79,159,255,0.05) 0%, transparent 55%);
+      --card-radius:      4px;
+      --btn-radius:       2px;
+      --card-border:      rgba(0,229,160,0.18);
+      --card-shadow:      0 0 24px rgba(0,229,160,0.06), 0 4px 20px rgba(0,0,0,0.7);
+      --card-hover-shadow:0 0 42px rgba(0,229,160,0.2), 0 0 0 1px rgba(0,229,160,0.45);
+      --glow:             0 0 12px rgba(0,229,160,0.4);
+      --glow-hover:       0 0 28px rgba(0,229,160,0.65);
+    }
+
+    /* Neon Flux extras */
+    body.dir-b .text-accent { text-shadow: 0 0 18px rgba(0,229,160,0.6); }
+    body.dir-b header       { border-bottom-color: rgba(0,229,160,0.12); }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar          { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track    { background: transparent; }
+    ::-webkit-scrollbar-thumb    { background: var(--s3); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--t3); }
+
+    /* ── Animations ── */
+    @keyframes fadeIn   { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+    @keyframes spin     { to { transform: rotate(360deg); } }
+    @keyframes blink    { 0%,100% { opacity:1; } 50% { opacity:0; } }
+    @keyframes scanline { 0% { transform:translateY(-100%); } 100% { transform:translateY(2400%); } }
+    @keyframes pulse    { 0%,100% { opacity:.5; } 50% { opacity:1; } }
+    @keyframes glowPulse { 0%,100% { box-shadow:0 0 12px rgba(0,229,160,0.3); } 50% { box-shadow:0 0 28px rgba(0,229,160,0.65); } }
+
+    .fade-in { animation: fadeIn .32s ease both; }
+
+    /* Inputs */
+    input::placeholder, textarea::placeholder { color: var(--t3); }
+    input:focus, textarea:focus, select:focus  { border-color: rgba(0,229,160,0.4) !important; box-shadow: 0 0 0 3px rgba(0,229,160,0.08); }
+
+    /* Number input arrows */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button { opacity: 0.4; }
+
+    /* Mobile tap highlight */
+    * { -webkit-tap-highlight-color: transparent; }
+
+    /* Prevent text zoom on input focus (iOS) */
+    input, select, textarea { font-size: max(16px, 1em); }
+
+    /* Safe area insets for notched phones */
+    @supports (padding-bottom: env(safe-area-inset-bottom)) {
+      nav[style*="position: fixed"][style*="bottom: 0"] {
+        padding-bottom: env(safe-area-inset-bottom);
+        height: calc(60px + env(safe-area-inset-bottom));
+      }
+    }
+
+    /* Smooth momentum scroll */
+    main { -webkit-overflow-scrolling: touch; }
+
+    /* Hide scrollbar on pill rows */
+    .pill-row { scrollbar-width: none; -ms-overflow-style: none; }
+    .pill-row::-webkit-scrollbar { display: none; }
+
+    /* Mobile: prevent horizontal overflow */
+    @media (max-width: 639px) {
+      body { overflow-x: hidden; }
+      main { overflow-x: hidden; }
+    }
+
+    #root { position: relative; min-height: 100vh; }
+
+    /* Utility classes */
+    .mono     { font-family: var(--mono); font-size: .83em; }
+    .text-accent { color: var(--accent); }
+    .text-sui    { color: var(--sui); }
+    .text-muted  { color: var(--t2); }
+    .text-dim    { color: var(--t3); }
+  </style>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body class="dir-a">
+  <div id="root"></div>
+
+  <script type="text/babel" src="components.jsx"></script>
+  <script type="text/babel" src="marketplace.jsx"></script>
+  <script type="text/babel" src="upload.jsx"></script>
+  <script type="text/babel" src="filedetail.jsx"></script>
+  <script type="text/babel" src="unlock.jsx"></script>
+  <script type="text/babel" src="dashboard.jsx"></script>
+  <script type="text/babel" src="app.jsx"></script>
+</body>
+</html>
