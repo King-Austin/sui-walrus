@@ -19,13 +19,43 @@ function useInView(threshold = 0.18) {
 
 /* ── Animated terminal ── */
 const TERMINAL_LINES = [
-  { delay: 0,    text: '$ walrus upload research-paper.pdf',         color: '#ECEAE4' },
-  { delay: 700,  text: '↑ uploading 2.4 MB → publisher node…',       color: '#9A9A8E' },
-  { delay: 1400, text: '✓ blob certified — 2-of-N erasure coded',     color: '#2A6347' },
-  { delay: 2100, text: 'blobId: bAEKDJ3ma9Nz7qL4xP2wR8sT5vU6…',     color: '#D4A853' },
-  { delay: 2800, text: '$ sui kiosk create --price 5 SUI',            color: '#ECEAE4' },
-  { delay: 3500, text: '✓ KioskOwnerCap minted → 0x7f3a…b12c',       color: '#2A6347' },
-  { delay: 4200, text: '✓ listing live on SUI-Walrus marketplace',    color: '#2A6347' },
+  { delay: 0,    text: '$ walrus upload research-paper.pdf',              color: '#ECEAE4' },
+  { delay: 650,  text: '  ↑ uploading 2.4 MB → publisher node…',          color: '#9A9A8E' },
+  { delay: 1300, text: '  ✓ blob certified — 2-of-N erasure coded',        color: '#2A6347' },
+  { delay: 1950, text: '  blobId: bAEKDJ3ma9Nz7qL4xP2wR8sT5vU6…',        color: '#D4A853' },
+  { delay: 2600, text: '  epochs: 5  redundancy: 2-of-N  size: 2.4 MB',   color: '#9A9A8E' },
+  { delay: 3300, text: '$ sui kiosk create --price 5 SUI',                 color: '#ECEAE4' },
+  { delay: 3950, text: '  ✓ KioskOwnerCap minted → 0x7f3a…b12c',          color: '#2A6347' },
+  { delay: 4600, text: '  ✓ listing live on walrus-market.vercel.app',     color: '#2A6347' },
+  { delay: 5400, text: '$ tatum sui getObject 0x9f2e8d1c…',               color: '#ECEAE4' },
+  { delay: 6050, text: '  owner: { AddressOwner: "0x4a21…9e3f" }',        color: '#9A9A8E' },
+  { delay: 6700, text: '  ✓ ownership verified — access granted',          color: '#2A6347' },
+  { delay: 7400, text: '$ walrus download bAEKDJ3ma9Nz7qL4xP2wR8sT5vU6…', color: '#ECEAE4' },
+  { delay: 8050, text: '  ↓ fetching from aggregator node…',               color: '#9A9A8E' },
+  { delay: 8700, text: '  ✓ research-paper.pdf  saved to ./downloads/',    color: '#2A6347' },
+];
+
+/* token colours */
+const T = {
+  kw:   '#D4A853', /* keyword / method */
+  str:  '#2A6347', /* string */
+  num:  '#4F9FFF', /* number / id */
+  cmt:  '#5A5A52', /* comment */
+  fn:   '#ECEAE4', /* function / symbol */
+  dim:  '#9A9A8E', /* punctuation */
+};
+
+const CODE_SNIPPET = [
+  { tokens: [{ t: '// verify ownership before granting access', c: T.cmt }] },
+  { tokens: [] },
+  { tokens: [{ t: 'const ', c: T.dim }, { t: 'obj', c: T.fn }, { t: ' = await ', c: T.dim }, { t: 'getSuiObject', c: T.kw }, { t: '(', c: T.dim }, { t: 'kioskId', c: T.fn }, { t: ');', c: T.dim }] },
+  { tokens: [{ t: 'const ', c: T.dim }, { t: 'owner', c: T.fn }, { t: ' = ', c: T.dim }, { t: 'obj', c: T.fn }, { t: '.owner?.AddressOwner;', c: T.dim }] },
+  { tokens: [] },
+  { tokens: [{ t: 'if ', c: T.kw }, { t: '(owner?.toLowerCase() === wallet.toLowerCase()) {', c: T.dim }] },
+  { tokens: [{ t: '  return ', c: T.kw }, { t: 'getBlobUrl', c: T.kw }, { t: '(', c: T.dim }, { t: 'blobId', c: T.fn }, { t: ');', c: T.dim }, { t: '  // ✓ unlock', c: T.str }] },
+  { tokens: [{ t: '}', c: T.dim }] },
+  { tokens: [] },
+  { tokens: [{ t: '// → ', c: T.cmt }, { t: '"https://aggregator.walrus.space/v1/blobs/bAEKDJ…"', c: T.str }] },
 ];
 
 function Terminal() {
@@ -41,35 +71,68 @@ function Terminal() {
   }, []);
 
   return (
-    <div style={{
-      background: '#0E0E0C', border: '0.5px solid rgba(255,255,255,0.12)',
-      borderRadius: 12, overflow: 'hidden', fontFamily: "'DM Mono', 'JetBrains Mono', monospace",
-    }}>
-      {/* terminal chrome */}
-      <div style={{ padding: '10px 14px', borderBottom: '0.5px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', gap: 7 }}>
-        {['#C0392B','#D4A853','#2A6347'].map(c => (
-          <div key={c} style={{ width: 10, height: 10, borderRadius: '50%', background: c, opacity: 0.8 }} />
-        ))}
-        <span style={{ fontSize: 10, color: '#5A5A52', marginLeft: 8, letterSpacing: '0.08em' }}>sui-walrus — bash</span>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      {/* ── bash terminal ── */}
+      <div style={{
+        background: '#0E0E0C', border: '0.5px solid rgba(255,255,255,0.12)',
+        borderRadius: 12, overflow: 'hidden', fontFamily: "'DM Mono', 'JetBrains Mono', monospace",
+      }}>
+        {/* chrome */}
+        <div style={{ padding: '10px 14px', borderBottom: '0.5px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', gap: 7 }}>
+          {['#C0392B','#D4A853','#2A6347'].map(c => (
+            <div key={c} style={{ width: 10, height: 10, borderRadius: '50%', background: c, opacity: 0.8 }} />
+          ))}
+          <span style={{ fontSize: 10, color: '#5A5A52', marginLeft: 8, letterSpacing: '0.08em' }}>sui-walrus — bash</span>
+        </div>
+        {/* lines */}
+        <div style={{ padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: 2 }}>
+          {TERMINAL_LINES.slice(0, shown).map((l, i) => (
+            <div key={i} style={{
+              fontSize: 12, color: l.color, lineHeight: 1.75,
+              animation: 'lpFadeUp 0.28s cubic-bezier(0.22,1,0.36,1) both',
+            }}>
+              {l.text}
+              {i === shown - 1 && shown < TERMINAL_LINES.length && (
+                <span style={{ display: 'inline-block', width: 6, height: 13, background: '#ECEAE4', marginLeft: 2, opacity: cursor ? 1 : 0, verticalAlign: 'text-bottom' }} />
+              )}
+            </div>
+          ))}
+          {shown === TERMINAL_LINES.length && (
+            <div style={{ fontSize: 12, color: '#ECEAE4', lineHeight: 1.75 }}>
+              $ <span style={{ display: 'inline-block', width: 6, height: 13, background: '#ECEAE4', marginLeft: 2, opacity: cursor ? 1 : 0, verticalAlign: 'text-bottom' }} />
+            </div>
+          )}
+        </div>
       </div>
-      {/* lines */}
-      <div style={{ padding: '18px 20px', minHeight: 200, display: 'flex', flexDirection: 'column', gap: 6 }}>
-        {TERMINAL_LINES.slice(0, shown).map((l, i) => (
-          <div key={i} style={{
-            fontSize: 12, color: l.color, lineHeight: 1.7,
-            animation: 'lpFadeUp 0.3s cubic-bezier(0.22,1,0.36,1) both',
-          }}>
-            {l.text}
-            {i === shown - 1 && shown < TERMINAL_LINES.length && (
-              <span style={{ display: 'inline-block', width: 7, height: 13, background: '#ECEAE4', marginLeft: 2, opacity: cursor ? 1 : 0, verticalAlign: 'text-bottom' }} />
-            )}
+
+      {/* ── code snippet ── */}
+      <div style={{
+        background: '#0E0E0C', border: '0.5px solid rgba(255,255,255,0.12)',
+        borderRadius: 12, overflow: 'hidden', fontFamily: "'DM Mono', 'JetBrains Mono', monospace",
+        opacity: shown >= 9 ? 1 : 0.25,
+        transition: 'opacity 0.6s ease',
+      }}>
+        <div style={{ padding: '10px 14px', borderBottom: '0.5px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+            {['#C0392B','#D4A853','#2A6347'].map(c => (
+              <div key={c} style={{ width: 10, height: 10, borderRadius: '50%', background: c, opacity: 0.8 }} />
+            ))}
+            <span style={{ fontSize: 10, color: '#5A5A52', marginLeft: 8, letterSpacing: '0.08em' }}>lib/tatum.ts</span>
           </div>
-        ))}
-        {shown === TERMINAL_LINES.length && (
-          <div style={{ fontSize: 12, color: '#ECEAE4', lineHeight: 1.7 }}>
-            $ <span style={{ display: 'inline-block', width: 7, height: 13, background: '#ECEAE4', marginLeft: 2, opacity: cursor ? 1 : 0, verticalAlign: 'text-bottom' }} />
-          </div>
-        )}
+          <span style={{ fontSize: 9, color: '#2A6347', letterSpacing: '0.1em', border: '0.5px solid rgba(42,99,71,0.4)', borderRadius: 4, padding: '2px 7px' }}>TYPESCRIPT</span>
+        </div>
+        <div style={{ padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: 0 }}>
+          {CODE_SNIPPET.map((line, i) => (
+            <div key={i} style={{ fontSize: 12, lineHeight: 1.8, display: 'flex', flexWrap: 'wrap' }}>
+              {line.tokens.length === 0
+                ? <span>&nbsp;</span>
+                : line.tokens.map((tok, j) => (
+                    <span key={j} style={{ color: tok.c }}>{tok.t}</span>
+                  ))
+              }
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -574,7 +637,6 @@ export default function LandingPage() {
           </div>
 
           <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <a href="https://github.com/King-Austin/sui-walrus" target="_blank" rel="noopener noreferrer" className="lp-btn-ghost lp-nav-ghost">GitHub ↗</a>
             <Link href="/marketplace" className="lp-btn-solid">Open App ↗</Link>
           </div>
         </nav>
