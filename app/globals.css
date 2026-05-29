@@ -72,9 +72,9 @@ body.dark {
   --rp-bg-raised:           #242420;
   --rp-bg-sunken:           #090907;
   --rp-text-primary:        #ECEAE4;
-  --rp-text-secondary:      #9A9A8E;
-  --rp-text-muted:          #6A6A60;
-  --rp-text-ghost:          #3A3A34;
+  --rp-text-secondary:      #B8B8AA;
+  --rp-text-muted:          #7A7A6E;
+  --rp-text-ghost:          #4A4A44;
   --rp-border:              rgba(255,255,255,0.09);
   --rp-border-strong:       rgba(255,255,255,0.18);
   --rp-accent-green:        #2A6347;
@@ -101,9 +101,9 @@ body.light {
   --rp-bg-raised:           #FFFFFF;
   --rp-bg-sunken:           #E4E2DC;
   --rp-text-primary:        #1C1C1A;
-  --rp-text-secondary:      #4A4A42;
-  --rp-text-muted:          #7A7A70;
-  --rp-text-ghost:          #9A9A90;
+  --rp-text-secondary:      #3A3A34;
+  --rp-text-muted:          #5A5A52;
+  --rp-text-ghost:          #8A8A82;
   --rp-border:              rgba(0,0,0,0.09);
   --rp-border-strong:       rgba(0,0,0,0.20);
   --rp-accent-green:        #1F4A35;

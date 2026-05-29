@@ -40,11 +40,11 @@ function PurchaseModal({ file, wallet, onClose, onSuccess }: PurchaseModalProps)
 
   const labelStyle = {
     fontFamily: "'DM Mono', monospace",
-    fontSize: 13, color: 'var(--rp-text-muted)',
+    fontSize: 15, color: 'var(--rp-text-secondary)',
   };
   const valueStyle = (accent?: boolean) => ({
     fontFamily: "'DM Mono', monospace",
-    fontSize: 13, color: accent ? 'var(--rp-accent-green)' : 'var(--rp-text-primary)',
+    fontSize: 15, color: accent ? 'var(--rp-accent-green)' : 'var(--rp-text-primary)',
     fontWeight: accent ? 500 : 400,
   });
 
@@ -76,8 +76,8 @@ function PurchaseModal({ file, wallet, onClose, onSuccess }: PurchaseModalProps)
               <div>
                 <p style={{
                   fontFamily: "'DM Mono', monospace",
-                  fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase',
-                  color: 'var(--rp-text-muted)', marginBottom: '0.25rem',
+                  fontSize: 14, letterSpacing: '0.15em', textTransform: 'uppercase',
+                  color: 'var(--rp-text-secondary)', marginBottom: '0.25rem',
                 }}>
                   Confirm Purchase
                 </p>
@@ -91,7 +91,7 @@ function PurchaseModal({ file, wallet, onClose, onSuccess }: PurchaseModalProps)
               </div>
               <button onClick={onClose} style={{
                 background: 'none', border: 'none',
-                color: 'var(--rp-text-muted)', cursor: 'pointer',
+                color: 'var(--rp-text-secondary)', cursor: 'pointer',
                 fontSize: 22, lineHeight: 1, padding: 2,
               }}>×</button>
             </div>
@@ -112,7 +112,7 @@ function PurchaseModal({ file, wallet, onClose, onSuccess }: PurchaseModalProps)
                 }}>
                   {file.title}
                 </div>
-                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: 'var(--rp-text-muted)' }}>{file.size}</div>
+                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 15, color: 'var(--rp-text-secondary)' }}>{file.size}</div>
               </div>
             </div>
 
@@ -143,7 +143,7 @@ function PurchaseModal({ file, wallet, onClose, onSuccess }: PurchaseModalProps)
             <div style={{ display: 'flex', gap: 10 }}>
               <button onClick={onClose} style={{
                 flex: 1, fontFamily: "'DM Mono', monospace",
-                fontSize: 13, fontWeight: 500, padding: '0.75rem',
+                fontSize: 15, fontWeight: 500, padding: '0.75rem',
                 borderRadius: 8, background: 'transparent',
                 border: '0.5px solid var(--rp-border-strong)',
                 color: 'var(--rp-text-primary)', cursor: 'pointer',
@@ -152,7 +152,7 @@ function PurchaseModal({ file, wallet, onClose, onSuccess }: PurchaseModalProps)
               </button>
               <button onClick={handleBuy} style={{
                 flex: 1, fontFamily: "'DM Mono', monospace",
-                fontSize: 13, fontWeight: 500, padding: '0.75rem',
+                fontSize: 15, fontWeight: 500, padding: '0.75rem',
                 borderRadius: 8,
                 background: 'var(--rp-accent-green)', color: '#ECEAE4',
                 border: 'none', cursor: 'pointer',
@@ -180,7 +180,7 @@ function PurchaseModal({ file, wallet, onClose, onSuccess }: PurchaseModalProps)
             }}>
               Waiting for Signature
             </h3>
-            <p style={{ fontFamily: "'DM Mono', monospace", fontSize: 13, color: 'var(--rp-text-muted)' }}>
+            <p style={{ fontFamily: "'DM Mono', monospace", fontSize: 15, color: 'var(--rp-text-secondary)' }}>
               Approve in {wallet.wallet}…
             </p>
           </div>
@@ -190,8 +190,8 @@ function PurchaseModal({ file, wallet, onClose, onSuccess }: PurchaseModalProps)
           <div style={{ textAlign: 'center' }}>
             <p style={{
               fontFamily: "'DM Mono', monospace",
-              fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase',
-              color: 'var(--rp-text-muted)', marginBottom: '0.5rem',
+              fontSize: 14, letterSpacing: '0.15em', textTransform: 'uppercase',
+              color: 'var(--rp-text-secondary)', marginBottom: '0.5rem',
             }}>
               Tatum RPC
             </p>
@@ -218,12 +218,12 @@ function PurchaseModal({ file, wallet, onClose, onSuccess }: PurchaseModalProps)
                 padding: '0 1rem', gap: 4,
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <Mono style={{ fontSize: '0.8em', color: 'var(--rp-text-muted)' }}>TATUM RPC</Mono>
+                  <Mono style={{ fontSize: '0.8em', color: 'var(--rp-text-secondary)' }}>TATUM RPC</Mono>
                   <Mono style={{ fontSize: '0.8em', color: 'var(--rp-accent-green)' }}>Querying…</Mono>
                 </div>
                 <div style={{
                   fontFamily: "'DM Mono', monospace",
-                  fontSize: 10, color: 'var(--rp-text-secondary)',
+                  fontSize: 14, color: 'var(--rp-text-secondary)',
                   overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                 }}>
                   GET /sui/v1/objects/{file.kiosk.slice(0, 14)}…
@@ -241,7 +241,7 @@ function PurchaseModal({ file, wallet, onClose, onSuccess }: PurchaseModalProps)
                 transition: 'width 0.2s', borderRadius: 50,
               }} />
             </div>
-            <p style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: 'var(--rp-text-muted)' }}>
+            <p style={{ fontFamily: "'DM Mono', monospace", fontSize: 14, color: 'var(--rp-text-secondary)' }}>
               Confirming ownership transfer…
             </p>
           </div>
@@ -265,7 +265,7 @@ function PurchaseModal({ file, wallet, onClose, onSuccess }: PurchaseModalProps)
             }}>
               Ownership Transferred
             </h3>
-            <p style={{ fontFamily: "'DM Mono', monospace", fontSize: 13, color: 'var(--rp-text-muted)' }}>
+            <p style={{ fontFamily: "'DM Mono', monospace", fontSize: 15, color: 'var(--rp-text-secondary)' }}>
               Unlocking file access…
             </p>
           </div>
@@ -304,7 +304,7 @@ export function FileDetail({ file, wallet, onWalletRequired, onPurchaseSuccess, 
         display: 'flex', alignItems: 'center', gap: 6,
         background: 'none', border: 'none',
         fontFamily: "'DM Mono', monospace",
-        fontSize: 13, color: 'var(--rp-text-muted)',
+        fontSize: 15, color: 'var(--rp-text-secondary)',
         cursor: 'pointer', marginBottom: '1.5rem', padding: 0,
         transition: 'color 0.12s',
       }}>
@@ -340,10 +340,10 @@ export function FileDetail({ file, wallet, onWalletRequired, onPurchaseSuccess, 
               }} />
               <FileIcon type={file.type} size={mobile ? 60 : 72} />
               <div style={{ position: 'relative', textAlign: 'center' }}>
-                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: 'var(--rp-text-muted)' }}>
+                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 14, color: 'var(--rp-text-secondary)' }}>
                   Access pass required to download
                 </div>
-                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: 'var(--rp-text-ghost)', marginTop: 2 }}>
+                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 15, color: 'var(--rp-text-ghost)', marginTop: 2 }}>
                   {file.size}
                 </div>
               </div>
@@ -356,7 +356,7 @@ export function FileDetail({ file, wallet, onWalletRequired, onPurchaseSuccess, 
                 {file.verified && (
                   <span style={{
                     fontFamily: "'DM Mono', monospace",
-                    fontSize: 10, fontWeight: 500,
+                    fontSize: 14, fontWeight: 500,
                     color: 'var(--rp-accent-green)',
                     background: 'var(--rp-accent-green-tint)',
                     border: '0.5px solid var(--rp-accent-green-border)',
@@ -369,7 +369,7 @@ export function FileDetail({ file, wallet, onWalletRequired, onPurchaseSuccess, 
                 {file.tags.map(t => (
                   <span key={t} style={{
                     fontFamily: "'DM Mono', monospace",
-                    fontSize: 10, color: 'var(--rp-text-muted)',
+                    fontSize: 14, color: 'var(--rp-text-secondary)',
                     background: 'var(--rp-bg-surface)',
                     border: '0.5px solid var(--rp-border)',
                     borderRadius: 4, padding: '2px 7px',
@@ -409,8 +409,8 @@ export function FileDetail({ file, wallet, onWalletRequired, onPurchaseSuccess, 
             }}>
               <p style={{
                 fontFamily: "'DM Mono', monospace",
-                fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase',
-                color: 'var(--rp-text-muted)',
+                fontSize: 14, letterSpacing: '0.15em', textTransform: 'uppercase',
+                color: 'var(--rp-text-secondary)',
               }}>
                 Technical Details
               </p>
@@ -431,7 +431,7 @@ export function FileDetail({ file, wallet, onWalletRequired, onPurchaseSuccess, 
               }}>
                 <span style={{
                   fontFamily: "'DM Mono', monospace",
-                  fontSize: 12, color: 'var(--rp-text-muted)', flexShrink: 0,
+                  fontSize: 14, color: 'var(--rp-text-secondary)', flexShrink: 0,
                 }}>
                   {r.label}
                 </span>
@@ -459,8 +459,8 @@ export function FileDetail({ file, wallet, onWalletRequired, onPurchaseSuccess, 
           }}>
             <p style={{
               fontFamily: "'DM Mono', monospace",
-              fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase',
-              color: 'var(--rp-text-muted)', marginBottom: '0.4rem',
+              fontSize: 14, letterSpacing: '0.15em', textTransform: 'uppercase',
+              color: 'var(--rp-text-secondary)', marginBottom: '0.4rem',
             }}>
               Price
             </p>
@@ -474,14 +474,14 @@ export function FileDetail({ file, wallet, onWalletRequired, onPurchaseSuccess, 
               </span>
               <span style={{
                 fontFamily: "'DM Mono', monospace",
-                fontSize: 16, color: 'var(--rp-text-muted)', fontWeight: 500,
+                fontSize: 16, color: 'var(--rp-text-secondary)', fontWeight: 500,
               }}>
                 SUI
               </span>
             </div>
             <p style={{
               fontFamily: "'DM Mono', monospace",
-              fontSize: 12, color: 'var(--rp-text-muted)', marginBottom: '1.25rem',
+              fontSize: 14, color: 'var(--rp-text-secondary)', marginBottom: '1.25rem',
             }}>
               One-time purchase · Permanent access
             </p>
@@ -494,7 +494,7 @@ export function FileDetail({ file, wallet, onWalletRequired, onPurchaseSuccess, 
                 border: '0.5px solid var(--rp-accent-green-border)',
                 borderRadius: 8, marginBottom: '1rem',
                 fontFamily: "'DM Mono', monospace",
-                fontSize: 13, fontWeight: 500, color: 'var(--rp-accent-green)',
+                fontSize: 15, fontWeight: 500, color: 'var(--rp-accent-green)',
               }}>
                 <span>✓</span> You own this file
               </div>
@@ -528,7 +528,7 @@ export function FileDetail({ file, wallet, onWalletRequired, onPurchaseSuccess, 
                 <div key={tx} style={{
                   display: 'flex', gap: 8, alignItems: 'center',
                   fontFamily: "'DM Mono', monospace",
-                  fontSize: 12, color: 'var(--rp-text-muted)',
+                  fontSize: 14, color: 'var(--rp-text-secondary)',
                 }}>
                   <span>{ic}</span><span>{tx}</span>
                 </div>
@@ -544,8 +544,8 @@ export function FileDetail({ file, wallet, onWalletRequired, onPurchaseSuccess, 
           }}>
             <p style={{
               fontFamily: "'DM Mono', monospace",
-              fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase',
-              color: 'var(--rp-text-muted)', marginBottom: '0.75rem',
+              fontSize: 14, letterSpacing: '0.12em', textTransform: 'uppercase',
+              color: 'var(--rp-text-secondary)', marginBottom: '0.75rem',
             }}>
               Seller
             </p>
@@ -556,15 +556,15 @@ export function FileDetail({ file, wallet, onWalletRequired, onPurchaseSuccess, 
                 border: '0.5px solid var(--rp-border)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontFamily: "'DM Mono', monospace",
-                fontSize: 11, color: 'var(--rp-text-muted)', flexShrink: 0,
+                fontSize: 15, color: 'var(--rp-text-secondary)', flexShrink: 0,
               }}>
                 {file.sellerShort.slice(2, 4).toUpperCase()}
               </div>
               <div>
-                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: 'var(--rp-text-primary)', marginBottom: 2 }}>
+                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 14, color: 'var(--rp-text-primary)', marginBottom: 2 }}>
                   {file.sellerShort}
                 </div>
-                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: 'var(--rp-text-muted)' }}>
+                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 15, color: 'var(--rp-text-secondary)' }}>
                   👁 {file.views} · ↓ {file.sales}
                 </div>
               </div>

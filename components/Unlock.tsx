@@ -64,8 +64,8 @@ export function Unlock({ file, txHash, onBack }: UnlockProps) {
   const eyebrow = (text: string) => (
     <p style={{
       fontFamily: "'DM Mono', monospace",
-      fontSize: 11, letterSpacing: '0.15em', textTransform: 'uppercase',
-      color: 'var(--rp-text-muted)', marginBottom: '0.4rem',
+      fontSize: 15, letterSpacing: '0.15em', textTransform: 'uppercase',
+      color: 'var(--rp-text-secondary)', marginBottom: '0.4rem',
     }}>
       {text}
     </p>
@@ -109,7 +109,7 @@ export function Unlock({ file, txHash, onBack }: UnlockProps) {
           </h2>
           <p style={{
             fontFamily: "'DM Mono', monospace",
-            fontSize: 13, color: 'var(--rp-text-muted)', marginBottom: '1.75rem', lineHeight: 1.6,
+            fontSize: 15, color: 'var(--rp-text-secondary)', marginBottom: '1.75rem', lineHeight: 1.6,
           }}>
             Confirming ownership on-chain via Tatum RPC
           </p>
@@ -134,7 +134,7 @@ export function Unlock({ file, txHash, onBack }: UnlockProps) {
               ))}
               <span style={{
                 fontFamily: "'DM Mono', monospace",
-                fontSize: 10, color: 'var(--rp-text-muted)', marginLeft: 6,
+                fontSize: 14, color: 'var(--rp-text-secondary)', marginLeft: 6,
               }}>
                 tatum-rpc · sui mainnet
               </span>
@@ -144,7 +144,7 @@ export function Unlock({ file, txHash, onBack }: UnlockProps) {
                 display: 'flex', alignItems: 'center', gap: 8,
                 padding: '3px 0',
                 fontFamily: "'DM Mono', monospace",
-                fontSize: mobile ? 12 : 13,
+                fontSize: mobile ? 14 : 15,
               }}>
                 <span style={{
                   color: checks[i]
@@ -185,14 +185,14 @@ export function Unlock({ file, txHash, onBack }: UnlockProps) {
             }}>
               <span style={{
                 fontFamily: "'DM Mono', monospace",
-                fontSize: 9, color: 'var(--rp-text-muted)',
+                fontSize: 15, color: 'var(--rp-text-secondary)',
                 letterSpacing: '0.1em', textTransform: 'uppercase', flexShrink: 0,
               }}>
                 TX
               </span>
               <span style={{
                 fontFamily: "'DM Mono', monospace",
-                fontSize: 12, color: 'var(--rp-text-secondary)',
+                fontSize: 14, color: 'var(--rp-text-secondary)',
                 overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
               }}>
                 {txHash}
@@ -240,11 +240,11 @@ export function Unlock({ file, txHash, onBack }: UnlockProps) {
             {[
               { label: '✓ Verified', color: 'var(--rp-accent-green)', bg: 'var(--rp-accent-green-tint)', border: 'var(--rp-accent-green-border)' },
               { label: 'Tatum RPC', color: '#4F9FFF', bg: 'rgba(79,159,255,0.08)', border: 'rgba(79,159,255,0.25)' },
-              { label: file?.size ?? '', color: 'var(--rp-text-muted)', bg: 'var(--rp-bg-surface)', border: 'var(--rp-border)' },
+              { label: file?.size ?? '', color: 'var(--rp-text-secondary)', bg: 'var(--rp-bg-surface)', border: 'var(--rp-border)' },
             ].map(b => (
               <span key={b.label} style={{
                 fontFamily: "'DM Mono', monospace",
-                fontSize: 11, fontWeight: 500, letterSpacing: '0.06em',
+                fontSize: 15, fontWeight: 500, letterSpacing: '0.06em',
                 padding: '3px 9px', borderRadius: 4,
                 color: b.color, background: b.bg,
                 border: `0.5px solid ${b.border}`,
@@ -270,8 +270,8 @@ export function Unlock({ file, txHash, onBack }: UnlockProps) {
                 padding: '0.75rem 1rem',
                 borderBottom: k !== 'Verified by' ? '0.5px solid var(--rp-border)' : 'none',
               }}>
-                <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: 'var(--rp-text-muted)' }}>{k}</span>
-                <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: accent ? 'var(--rp-accent-green)' : 'var(--rp-text-primary)' }}>{v}</span>
+                <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 14, color: 'var(--rp-text-secondary)' }}>{k}</span>
+                <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 14, color: accent ? 'var(--rp-accent-green)' : 'var(--rp-text-primary)' }}>{v}</span>
               </div>
             ))}
           </div>
@@ -305,7 +305,7 @@ export function Unlock({ file, txHash, onBack }: UnlockProps) {
           </h2>
           <p style={{
             fontFamily: "'DM Mono', monospace",
-            fontSize: 13, color: 'var(--rp-text-muted)', marginBottom: '1.5rem', lineHeight: 1.6,
+            fontSize: 15, color: 'var(--rp-text-secondary)', marginBottom: '1.5rem', lineHeight: 1.6,
           }}>
             Fetching your blob from the decentralized network
           </p>
@@ -323,7 +323,7 @@ export function Unlock({ file, txHash, onBack }: UnlockProps) {
           <div style={{
             display: 'flex', justifyContent: 'space-between',
             fontFamily: "'DM Mono', monospace",
-            fontSize: 12, color: 'var(--rp-text-muted)',
+            fontSize: 14, color: 'var(--rp-text-secondary)',
           }}>
             <Mono>blob.{file?.type} ← walrus</Mono>
             <span style={{ color: 'var(--rp-accent-green)', fontWeight: 500 }}>{dlProgress}%</span>
@@ -356,7 +356,7 @@ export function Unlock({ file, txHash, onBack }: UnlockProps) {
           </h2>
           <p style={{
             fontFamily: "'DM Mono', monospace",
-            fontSize: 13, color: 'var(--rp-text-muted)', marginBottom: '1.5rem', lineHeight: 1.6,
+            fontSize: 15, color: 'var(--rp-text-secondary)', marginBottom: '1.5rem', lineHeight: 1.6,
           }}>
             Retrieved from Walrus and saved to your device.
           </p>
@@ -379,14 +379,14 @@ export function Unlock({ file, txHash, onBack }: UnlockProps) {
               }}>
                 <div style={{
                   fontFamily: "'DM Mono', monospace",
-                  fontSize: 10, color: 'var(--rp-text-muted)',
+                  fontSize: 14, color: 'var(--rp-text-secondary)',
                   letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.35rem',
                 }}>
                   {k}
                 </div>
                 <div style={{
                   fontFamily: "'DM Mono', monospace",
-                  fontSize: 13, color: 'var(--rp-text-primary)', fontWeight: 500,
+                  fontSize: 15, color: 'var(--rp-text-primary)', fontWeight: 500,
                 }}>
                   {v}
                 </div>
@@ -397,7 +397,7 @@ export function Unlock({ file, txHash, onBack }: UnlockProps) {
           <button onClick={onBack} style={{
             width: '100%',
             fontFamily: "'DM Mono', monospace",
-            fontSize: 13, fontWeight: 500, padding: '0.75rem',
+            fontSize: 15, fontWeight: 500, padding: '0.75rem',
             borderRadius: 8, background: 'transparent',
             border: '0.5px solid var(--rp-border-strong)',
             color: 'var(--rp-text-primary)', cursor: 'pointer',

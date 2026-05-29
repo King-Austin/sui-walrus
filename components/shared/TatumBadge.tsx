@@ -5,12 +5,18 @@ import { StatusDot } from './StatusDot';
 export function TatumBadge() {
   return (
     <div style={{
-      display: 'flex', alignItems: 'center', gap: 7,
-      background: 'var(--s2)', border: '1px solid var(--border)',
-      borderRadius: 8, padding: '7px 12px', fontSize: 12, color: 'var(--t2)',
+      display: 'flex', alignItems: 'center', gap: 8,
+      background: 'var(--rp-bg-sunken)',
+      border: '0.5px solid var(--rp-border-strong)',
+      borderRadius: 8, padding: '8px 14px',
+      fontFamily: "'DM Mono', monospace",
+      fontSize: 13, color: 'var(--rp-text-secondary)',
     }}>
-      <StatusDot/>
-      <span>Tatum RPC · <span style={{ color: 'var(--accent)', fontWeight: 500 }}>Sui Mainnet</span></span>
+      <StatusDot />
+      <span>
+        Tatum RPC ·{' '}
+        <span style={{ color: 'var(--rp-accent-green)', fontWeight: 500 }}>Sui Mainnet</span>
+      </span>
     </div>
   );
 }

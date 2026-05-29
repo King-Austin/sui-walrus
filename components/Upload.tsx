@@ -24,7 +24,7 @@ interface UploadProps {
 
 const monoLabel: React.CSSProperties = {
   fontFamily: "'DM Mono', monospace",
-  fontSize: 12, color: 'var(--rp-text-muted)',
+  fontSize: 14, color: 'var(--rp-text-secondary)',
   marginBottom: '0.5rem', fontWeight: 500,
   display: 'block',
 };
@@ -134,7 +134,7 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
                 border: `0.5px solid ${i <= step ? 'var(--rp-accent-green)' : 'var(--rp-border)'}`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontFamily: "'DM Mono', monospace",
-                fontSize: 11, fontWeight: 500,
+                fontSize: 15, fontWeight: 500,
                 color: i < step ? '#ECEAE4' : i === step ? 'var(--rp-accent-green)' : 'var(--rp-text-muted)',
                 transition: 'all 0.3s',
               }}>
@@ -143,7 +143,7 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
               {!mobile && (
                 <span style={{
                   fontFamily: "'DM Mono', monospace",
-                  fontSize: 10, letterSpacing: '0.06em',
+                  fontSize: 14, letterSpacing: '0.06em',
                   color: i <= step ? 'var(--rp-accent-green)' : 'var(--rp-text-muted)',
                   whiteSpace: 'nowrap',
                 }}>
@@ -169,8 +169,8 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
         <div className="fade-in">
           <p style={{
             fontFamily: "'DM Mono', monospace",
-            fontSize: 11, letterSpacing: '0.15em', textTransform: 'uppercase',
-            color: 'var(--rp-text-muted)', marginBottom: '0.5rem', textAlign: 'center',
+            fontSize: 15, letterSpacing: '0.15em', textTransform: 'uppercase',
+            color: 'var(--rp-text-secondary)', marginBottom: '0.5rem', textAlign: 'center',
           }}>
             01 — Upload
           </p>
@@ -186,7 +186,7 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
           </h2>
           <p style={{
             fontFamily: "'DM Mono', monospace",
-            fontSize: 13, color: 'var(--rp-text-muted)',
+            fontSize: 15, color: 'var(--rp-text-secondary)',
             textAlign: 'center', marginBottom: '1.75rem',
             lineHeight: 1.65,
           }}>
@@ -210,7 +210,7 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
             <div style={{
               fontFamily: "'DM Mono', monospace",
               fontSize: mobile ? 32 : 40, marginBottom: '0.875rem',
-              opacity: 0.5, color: 'var(--rp-text-muted)',
+              opacity: 0.5, color: 'var(--rp-text-secondary)',
             }}>
               ⬆
             </div>
@@ -223,13 +223,13 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
             </div>
             <div style={{
               fontFamily: "'DM Mono', monospace",
-              fontSize: 13, color: 'var(--rp-text-muted)', marginBottom: '1.5rem',
+              fontSize: 15, color: 'var(--rp-text-secondary)', marginBottom: '1.5rem',
             }}>
               PDF, ZIP, CSV, JSON, MP4…
             </div>
             <span style={{
               fontFamily: "'DM Mono', monospace",
-              fontSize: 13, fontWeight: 500,
+              fontSize: 15, fontWeight: 500,
               padding: '0.5rem 1.25rem', borderRadius: 8,
               background: 'transparent',
               border: '0.5px solid var(--rp-border-strong)',
@@ -252,13 +252,13 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
               <div style={{ flex: 1 }}>
                 <div style={{
                   fontFamily: "'DM Mono', monospace",
-                  fontSize: 13, fontWeight: 500, color: '#4F9FFF', marginBottom: 2,
+                  fontSize: 15, fontWeight: 500, color: '#4F9FFF', marginBottom: 2,
                 }}>
                   Wallet required
                 </div>
                 <div style={{
                   fontFamily: "'DM Mono', monospace",
-                  fontSize: 12, color: 'var(--rp-text-muted)',
+                  fontSize: 14, color: 'var(--rp-text-secondary)',
                 }}>
                   Connect your Sui wallet before uploading.
                 </div>
@@ -267,7 +267,7 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
                 onClick={onWalletRequired}
                 style={{
                   fontFamily: "'DM Mono', monospace",
-                  fontSize: 12, fontWeight: 500,
+                  fontSize: 14, fontWeight: 500,
                   padding: '0.4rem 0.875rem', borderRadius: 8,
                   background: 'rgba(79,159,255,0.12)',
                   border: '0.5px solid rgba(79,159,255,0.3)',
@@ -295,8 +295,8 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
           </div>
           <p style={{
             fontFamily: "'DM Mono', monospace",
-            fontSize: 11, letterSpacing: '0.15em', textTransform: 'uppercase',
-            color: 'var(--rp-text-muted)', marginBottom: '0.4rem',
+            fontSize: 15, letterSpacing: '0.15em', textTransform: 'uppercase',
+            color: 'var(--rp-text-secondary)', marginBottom: '0.4rem',
           }}>
             Walrus Storage
           </p>
@@ -309,7 +309,7 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
           </h2>
           <p style={{
             fontFamily: "'DM Mono', monospace",
-            fontSize: 13, color: 'var(--rp-text-muted)', marginBottom: '1.5rem',
+            fontSize: 15, color: 'var(--rp-text-secondary)', marginBottom: '1.5rem',
           }}>
             {file?.name}
           </p>
@@ -327,7 +327,7 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
           <div style={{
             display: 'flex', justifyContent: 'space-between',
             fontFamily: "'DM Mono', monospace",
-            fontSize: 12, color: 'var(--rp-text-muted)',
+            fontSize: 14, color: 'var(--rp-text-secondary)',
           }}>
             <span>Uploading blob…</span>
             <span style={{ color: 'var(--rp-accent-green)', fontWeight: 500 }}>{progress}%</span>
@@ -348,8 +348,8 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
                 padding: '0.625rem 1rem',
                 borderBottom: i < 2 ? '0.5px solid var(--rp-border)' : 'none',
               }}>
-                <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: 'var(--rp-text-muted)' }}>{k}</span>
-                <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: 'var(--rp-text-secondary)', textAlign: 'right' }}>{v}</span>
+                <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 14, color: 'var(--rp-text-secondary)' }}>{k}</span>
+                <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 15, color: 'var(--rp-text-secondary)', textAlign: 'right' }}>{v}</span>
               </div>
             ))}
           </div>
@@ -361,8 +361,8 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
         <div className="fade-in">
           <p style={{
             fontFamily: "'DM Mono', monospace",
-            fontSize: 11, letterSpacing: '0.15em', textTransform: 'uppercase',
-            color: 'var(--rp-text-muted)', marginBottom: '0.4rem',
+            fontSize: 15, letterSpacing: '0.15em', textTransform: 'uppercase',
+            color: 'var(--rp-text-secondary)', marginBottom: '0.4rem',
           }}>
             03 — Listing Details
           </p>
@@ -377,7 +377,7 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
           </h2>
           <p style={{
             fontFamily: "'DM Mono', monospace",
-            fontSize: 13, color: 'var(--rp-text-muted)', marginBottom: '1.25rem', lineHeight: 1.6,
+            fontSize: 15, color: 'var(--rp-text-secondary)', marginBottom: '1.25rem', lineHeight: 1.6,
           }}>
             Your file is stored. Wrap it in a Sui access pass and set a price.
           </p>
@@ -390,14 +390,14 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
           }}>
             <div style={{
               fontFamily: "'DM Mono', monospace",
-              fontSize: 10, color: 'var(--rp-text-muted)',
+              fontSize: 14, color: 'var(--rp-text-secondary)',
               letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.25rem',
             }}>
               Walrus Blob ID
             </div>
             <div style={{
               fontFamily: "'DM Mono', monospace",
-              fontSize: 12, color: 'var(--rp-accent-green)', wordBreak: 'break-all',
+              fontSize: 14, color: 'var(--rp-accent-green)', wordBreak: 'break-all',
             }}>
               {blobId}
             </div>
@@ -465,7 +465,7 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
                   }}>
                     <span style={{
                       fontFamily: "'DM Mono', monospace",
-                      fontSize: 13,
+                      fontSize: 15,
                       color: accent ? 'var(--rp-text-primary)' : 'var(--rp-text-muted)',
                       fontWeight: accent ? 500 : 400,
                     }}>
@@ -473,7 +473,7 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
                     </span>
                     <span style={{
                       fontFamily: "'DM Mono', monospace",
-                      fontSize: 13,
+                      fontSize: 15,
                       color: accent ? 'var(--rp-accent-green)' : 'var(--rp-text-muted)',
                       fontWeight: accent ? 500 : 400,
                     }}>
@@ -529,8 +529,8 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
           </div>
           <p style={{
             fontFamily: "'DM Mono', monospace",
-            fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase',
-            color: 'var(--rp-text-muted)', marginBottom: '0.4rem',
+            fontSize: 14, letterSpacing: '0.15em', textTransform: 'uppercase',
+            color: 'var(--rp-text-secondary)', marginBottom: '0.4rem',
           }}>
             04 — Publishing
           </p>
@@ -543,7 +543,7 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
           </h2>
           <p style={{
             fontFamily: "'DM Mono', monospace",
-            fontSize: 13, color: 'var(--rp-text-muted)', marginBottom: '1.5rem',
+            fontSize: 15, color: 'var(--rp-text-secondary)', marginBottom: '1.5rem',
           }}>
             Submitting your listing to the Sui blockchain…
           </p>
@@ -570,15 +570,15 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}>
                   {i < publishStep
-                    ? <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, color: '#ECEAE4', fontWeight: 500 }}>✓</span>
+                    ? <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 14, color: '#ECEAE4', fontWeight: 500 }}>✓</span>
                     : i === publishStep
                       ? <Spinner size={9} />
-                      : <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, color: 'var(--rp-text-muted)' }}>{i + 1}</span>
+                      : <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 14, color: 'var(--rp-text-secondary)' }}>{i + 1}</span>
                   }
                 </div>
                 <span style={{
                   fontFamily: "'DM Mono', monospace",
-                  fontSize: 13,
+                  fontSize: 15,
                   color: i === publishStep ? 'var(--rp-text-primary)' : 'var(--rp-text-muted)',
                   fontWeight: i === publishStep ? 500 : 400,
                 }}>
@@ -605,7 +605,7 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
           </div>
           <p style={{
             fontFamily: "'DM Mono', monospace",
-            fontSize: 11, letterSpacing: '0.15em', textTransform: 'uppercase',
+            fontSize: 15, letterSpacing: '0.15em', textTransform: 'uppercase',
             color: 'var(--rp-accent-green)', marginBottom: '0.4rem',
           }}>
             05 — Live
@@ -619,7 +619,7 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
           </h2>
           <p style={{
             fontFamily: "'DM Mono', monospace",
-            fontSize: 13, color: 'var(--rp-text-muted)', marginBottom: '1.5rem',
+            fontSize: 15, color: 'var(--rp-text-secondary)', marginBottom: '1.5rem',
           }}>
             Your access pass is live on the Sui Kiosk marketplace.
           </p>
@@ -642,8 +642,8 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
                 padding: '0.625rem 0',
                 borderBottom: i < 4 ? '0.5px solid var(--rp-border)' : 'none',
               }}>
-                <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: 'var(--rp-text-muted)' }}>{k}</span>
-                <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: accent ? 'var(--rp-accent-green)' : 'var(--rp-text-primary)' }}>{v}</span>
+                <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 14, color: 'var(--rp-text-secondary)' }}>{k}</span>
+                <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 14, color: accent ? 'var(--rp-accent-green)' : 'var(--rp-text-primary)' }}>{v}</span>
               </div>
             ))}
           </div>
@@ -651,7 +651,7 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
           <div style={{ display: 'flex', gap: 10 }}>
             <button onClick={reset} style={{
               flex: 1, fontFamily: "'DM Mono', monospace",
-              fontSize: 13, fontWeight: 500, padding: '0.75rem',
+              fontSize: 15, fontWeight: 500, padding: '0.75rem',
               borderRadius: 8, background: 'transparent',
               border: '0.5px solid var(--rp-border-strong)',
               color: 'var(--rp-text-primary)', cursor: 'pointer',
@@ -660,7 +660,7 @@ export function Upload({ wallet, onWalletRequired, onNavigate }: UploadProps) {
             </button>
             <button onClick={() => onNavigate('dashboard')} style={{
               flex: 1, fontFamily: "'DM Mono', monospace",
-              fontSize: 13, fontWeight: 500, padding: '0.75rem',
+              fontSize: 15, fontWeight: 500, padding: '0.75rem',
               borderRadius: 8,
               background: 'var(--rp-accent-green)', color: '#ECEAE4',
               border: 'none', cursor: 'pointer',

@@ -27,12 +27,13 @@ function ThemeToggle({ direction, setDirection }: { direction: Direction; setDir
       onClick={() => setDirection(isDark ? 'light' : 'dark')}
       title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       style={{
-        width: 32, height: 32, borderRadius: 8, flexShrink: 0,
+        width: 34, height: 34, borderRadius: 8, flexShrink: 0,
         background: 'transparent',
-        border: '0.5px solid var(--rp-border)',
+        border: '0.5px solid var(--rp-border-strong)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        cursor: 'pointer', transition: 'border-color 0.15s', fontSize: 14, lineHeight: 1,
-        color: 'var(--rp-text-muted)',
+        cursor: 'pointer', transition: 'border-color 0.15s',
+        fontSize: 16, lineHeight: 1,
+        color: 'var(--rp-text-secondary)',
       }}
     >
       {isDark ? '☀' : '●'}
@@ -48,11 +49,11 @@ export function Header({ page, setPage, wallet, onWalletClick, direction, setDir
       onClick={() => setPage('marketplace')}
       style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'none', border: 'none', cursor: 'pointer', padding: 0, flexShrink: 0 }}
     >
-      <Logo size={28} />
+      <Logo size={30} />
       <div style={{ textAlign: 'left' }}>
         <div style={{
           fontFamily: "'DM Mono', monospace",
-          fontWeight: 500, fontSize: 14,
+          fontWeight: 500, fontSize: 16,
           color: 'var(--rp-text-primary)', letterSpacing: '-0.01em', lineHeight: 1.2,
         }}>
           SUI<span style={{ color: 'var(--rp-accent-green)' }}>-Walrus</span>
@@ -60,8 +61,8 @@ export function Header({ page, setPage, wallet, onWalletClick, direction, setDir
         {!mobile && (
           <div style={{
             fontFamily: "'DM Mono', monospace",
-            fontSize: 9, color: 'var(--rp-text-muted)',
-            letterSpacing: '0.15em', textTransform: 'uppercase',
+            fontSize: 11, color: 'var(--rp-text-secondary)',
+            letterSpacing: '0.12em', textTransform: 'uppercase',
           }}>
             File Marketplace
           </div>
@@ -74,14 +75,14 @@ export function Header({ page, setPage, wallet, onWalletClick, direction, setDir
     <div style={{
       display: 'flex', alignItems: 'center', gap: 8,
       background: 'var(--rp-bg-surface)',
-      border: '0.5px solid var(--rp-border)',
-      padding: mobile ? '5px 10px' : '7px 13px',
+      border: '0.5px solid var(--rp-border-strong)',
+      padding: mobile ? '6px 12px' : '8px 14px',
       borderRadius: 8, flexShrink: 0,
     }}>
       <StatusDot />
       <div>
-        <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: 'var(--rp-text-primary)', lineHeight: 1.2 }}>{wallet.short}</div>
-        {!mobile && <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: 'var(--rp-accent-green)', lineHeight: 1 }}>{wallet.balance} SUI</div>}
+        <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 13, color: 'var(--rp-text-primary)', lineHeight: 1.2 }}>{wallet.short}</div>
+        {!mobile && <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: 'var(--rp-accent-green)', lineHeight: 1, marginTop: 1 }}>{wallet.balance} SUI</div>}
       </div>
     </div>
   ) : (
@@ -89,8 +90,8 @@ export function Header({ page, setPage, wallet, onWalletClick, direction, setDir
       onClick={onWalletClick}
       style={{
         fontFamily: "'DM Mono', monospace",
-        fontSize: 13, fontWeight: 500,
-        padding: mobile ? '0.45rem 0.875rem' : '0.5rem 1.1rem',
+        fontSize: 14, fontWeight: 500,
+        padding: mobile ? '0.5rem 1rem' : '0.55rem 1.25rem',
         background: 'var(--rp-text-primary)',
         color: 'var(--rp-bg-primary)',
         border: 'none', borderRadius: 8,
@@ -111,7 +112,7 @@ export function Header({ page, setPage, wallet, onWalletClick, direction, setDir
           backdropFilter: 'blur(16px)',
           borderBottom: '0.5px solid var(--rp-border)',
           display: 'flex', alignItems: 'center',
-          padding: '0 16px', height: 52, gap: 10,
+          padding: '0 16px', height: 56, gap: 10,
         }}>
           {logoMark}
           <div style={{ flex: 1 }} />
@@ -119,13 +120,12 @@ export function Header({ page, setPage, wallet, onWalletClick, direction, setDir
           {walletChip}
         </header>
 
-        {/* Bottom nav */}
         <nav className="bottom-nav" style={{
           position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 100,
           background: 'var(--rp-bg-primary)',
           backdropFilter: 'blur(16px)',
           borderTop: '0.5px solid var(--rp-border)',
-          display: 'flex', height: 60,
+          display: 'flex', height: 64,
         }}>
           {NAV.map(n => (
             <button
@@ -136,12 +136,12 @@ export function Header({ page, setPage, wallet, onWalletClick, direction, setDir
                 alignItems: 'center', justifyContent: 'center', gap: 4,
                 background: 'none', border: 'none', cursor: 'pointer',
                 fontFamily: "'DM Mono', monospace",
-                color: page === n.id ? 'var(--rp-accent-green)' : 'var(--rp-text-muted)',
+                color: page === n.id ? 'var(--rp-accent-green)' : 'var(--rp-text-secondary)',
                 transition: 'color 0.15s', position: 'relative',
               }}
             >
               <span style={{
-                fontSize: 11, fontWeight: page === n.id ? 500 : 400,
+                fontSize: 13, fontWeight: page === n.id ? 500 : 400,
                 letterSpacing: '0.06em', textTransform: 'uppercase',
               }}>
                 {n.label}
@@ -166,7 +166,7 @@ export function Header({ page, setPage, wallet, onWalletClick, direction, setDir
       backdropFilter: 'blur(16px)',
       borderBottom: '0.5px solid var(--rp-border)',
       display: 'flex', alignItems: 'center',
-      padding: '0 2.5rem', height: 60,
+      padding: '0 2.5rem', height: 64,
       gap: tablet ? 16 : 32,
     }}>
       {logoMark}
@@ -178,11 +178,11 @@ export function Header({ page, setPage, wallet, onWalletClick, direction, setDir
             onClick={() => setPage(n.id)}
             style={{
               fontFamily: "'DM Mono', monospace",
-              fontSize: 12, fontWeight: 500,
+              fontSize: 13, fontWeight: 500,
               letterSpacing: '0.06em', textTransform: 'uppercase',
-              padding: '0.4rem 0.875rem', borderRadius: 6,
+              padding: '0.45rem 1rem', borderRadius: 6,
               background: page === n.id ? 'var(--rp-accent-green-tint)' : 'transparent',
-              color: page === n.id ? 'var(--rp-accent-green)' : 'var(--rp-text-muted)',
+              color: page === n.id ? 'var(--rp-accent-green)' : 'var(--rp-text-secondary)',
               border: page === n.id
                 ? '0.5px solid var(--rp-accent-green-border)'
                 : '0.5px solid transparent',

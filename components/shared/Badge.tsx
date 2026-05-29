@@ -3,18 +3,18 @@
 import type { ReactNode } from 'react';
 
 const CATEGORY_MAP: Record<string, { c: string; b: string }> = {
-  Research:  { c: '#4F9FFF', b: 'rgba(79,159,255,0.1)' },
-  Dataset:   { c: '#00E5A0', b: 'rgba(0,229,160,0.1)' },
-  Art:       { c: '#FF6B9D', b: 'rgba(255,107,157,0.1)' },
-  Finance:   { c: '#FFB347', b: 'rgba(255,179,71,0.1)' },
-  Education: { c: '#A78BFA', b: 'rgba(167,139,250,0.1)' },
-  Code:      { c: '#00E5A0', b: 'rgba(0,229,160,0.1)' },
+  Research:  { c: '#4F9FFF', b: 'rgba(79,159,255,0.12)' },
+  Dataset:   { c: '#2A9460', b: 'rgba(42,148,96,0.12)'  },
+  Art:       { c: '#FF6B9D', b: 'rgba(255,107,157,0.12)' },
+  Finance:   { c: '#D4A853', b: 'rgba(212,168,83,0.12)' },
+  Education: { c: '#A78BFA', b: 'rgba(167,139,250,0.12)' },
+  Code:      { c: '#2A9460', b: 'rgba(42,148,96,0.12)'  },
 };
 
 export function Badge({
   children,
-  color = 'var(--t3)',
-  bg = 'rgba(255,255,255,0.05)',
+  color = 'var(--rp-text-secondary)',
+  bg = 'var(--rp-bg-surface)',
 }: {
   children: ReactNode;
   color?: string;
@@ -24,8 +24,10 @@ export function Badge({
     <span style={{
       display: 'inline-flex', alignItems: 'center',
       padding: '3px 10px', borderRadius: 100,
-      fontSize: 11, fontWeight: 500, letterSpacing: 0.3,
-      background: bg, color, border: `1px solid ${color}33`,
+      fontFamily: "'DM Mono', monospace",
+      fontSize: 12, fontWeight: 500, letterSpacing: '0.03em',
+      background: bg, color,
+      border: `0.5px solid ${color}44`,
       whiteSpace: 'nowrap',
     }}>
       {children}
@@ -34,6 +36,6 @@ export function Badge({
 }
 
 export function CategoryBadge({ category }: { category: string }) {
-  const { c, b } = CATEGORY_MAP[category] ?? { c: 'var(--t2)', b: 'var(--s2)' };
+  const { c, b } = CATEGORY_MAP[category] ?? { c: 'var(--rp-text-secondary)', b: 'var(--rp-bg-surface)' };
   return <Badge color={c} bg={b}>{category}</Badge>;
 }

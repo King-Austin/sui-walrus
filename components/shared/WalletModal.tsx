@@ -56,8 +56,8 @@ export function WalletModal({ onConnect, onClose }: WalletModalProps) {
           <div>
             <p style={{
               fontFamily: "'DM Mono', monospace",
-              fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase',
-              color: 'var(--rp-text-muted)', marginBottom: '0.35rem',
+              fontSize: 14, letterSpacing: '0.15em', textTransform: 'uppercase',
+              color: 'var(--rp-text-secondary)', marginBottom: '0.35rem',
             }}>
               Connect Wallet
             </p>
@@ -72,7 +72,7 @@ export function WalletModal({ onConnect, onClose }: WalletModalProps) {
           </div>
           <button onClick={onClose} style={{
             background: 'none', border: 'none',
-            color: 'var(--rp-text-muted)', cursor: 'pointer',
+            color: 'var(--rp-text-secondary)', cursor: 'pointer',
             fontSize: 22, lineHeight: 1, padding: 2, flexShrink: 0,
           }}>
             ×
@@ -93,7 +93,7 @@ export function WalletModal({ onConnect, onClose }: WalletModalProps) {
           }} />
           <span style={{
             fontFamily: "'DM Mono', monospace",
-            fontSize: 11, color: 'var(--rp-text-muted)',
+            fontSize: 15, color: 'var(--rp-text-secondary)',
           }}>
             Ownership verified via Tatum RPC · Sui Mainnet
           </span>
@@ -126,7 +126,7 @@ export function WalletModal({ onConnect, onClose }: WalletModalProps) {
                 border: `0.5px solid ${w.color}40`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontFamily: "'DM Mono', monospace",
-                fontSize: 12, fontWeight: 500, color: w.color,
+                fontSize: 14, fontWeight: 500, color: w.color,
               }}>
                 {initials[w.id] ?? w.id.slice(0, 2).toUpperCase()}
               </div>
@@ -142,7 +142,7 @@ export function WalletModal({ onConnect, onClose }: WalletModalProps) {
                 </div>
                 <div style={{
                   fontFamily: "'DM Mono', monospace",
-                  fontSize: 12, color: 'var(--rp-text-muted)',
+                  fontSize: 14, color: 'var(--rp-text-secondary)',
                 }}>
                   {w.subtitle}
                 </div>
@@ -150,7 +150,7 @@ export function WalletModal({ onConnect, onClose }: WalletModalProps) {
 
               {connecting === w.id
                 ? <Spinner size={16} />
-                : <span style={{ color: 'var(--rp-text-muted)', fontSize: 18, lineHeight: 1 }}>›</span>
+                : <span style={{ color: 'var(--rp-text-secondary)', fontSize: 18, lineHeight: 1 }}>›</span>
               }
             </button>
           ))}
@@ -158,7 +158,7 @@ export function WalletModal({ onConnect, onClose }: WalletModalProps) {
 
         <p style={{
           fontFamily: "'DM Mono', monospace",
-          textAlign: 'center', fontSize: 11,
+          textAlign: 'center', fontSize: 15,
           color: 'var(--rp-text-ghost)', marginTop: '1.25rem',
           lineHeight: 1.5,
         }}>
