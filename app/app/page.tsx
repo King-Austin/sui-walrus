@@ -1,5 +1,5 @@
-import { SuiWalrusApp } from '@/components/SuiWalrusApp';
+import { redirect } from 'next/navigation';
 
 export default function Page() {
-  return <SuiWalrusApp/>;
+  redirect('/landing');
 }
