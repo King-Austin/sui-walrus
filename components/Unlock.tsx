@@ -3,8 +3,6 @@
 import { useState, useEffect } from 'react';
 import type { FileItem, WalletInfo } from '@/lib/types';
 import { useViewport } from '@/hooks/useViewport';
-import { Badge } from './shared/Badge';
-import { Btn } from './shared/Btn';
 import { Mono } from './shared/Mono';
 
 const CHECK_LABELS = [
@@ -31,7 +29,6 @@ export function Unlock({ file, txHash, onBack }: UnlockProps) {
   useEffect(() => {
     let cancelled = false;
     const run = async () => {
-      // In production: call /api/tatum/verify to confirm ownership on-chain
       for (let i = 0; i < 4; i++) {
         await new Promise(r => setTimeout(r, 900 + Math.random() * 500));
         if (cancelled) return;
@@ -46,7 +43,6 @@ export function Unlock({ file, txHash, onBack }: UnlockProps) {
 
   const handleDownload = async () => {
     setPhase('downloading');
-    // In production: fetch the blob URL from /api/walrus/blob or directly from aggregator
     for (let i = 0; i <= 100; i += Math.random() * 12 + 3) {
       await new Promise(r => setTimeout(r, 80 + Math.random() * 60));
       setDlProgress(Math.min(Math.round(i), 100));
@@ -62,111 +58,352 @@ export function Unlock({ file, txHash, onBack }: UnlockProps) {
     }
   };
 
-  const pad = mobile ? '32px 16px' : '56px 28px';
   const blobShort = file?.blobId ? file.blobId.slice(0, 18) + '…' : '—';
   const doneCount = checks.filter(Boolean).length;
 
-  return (
-    <div className="fade-in" style={{ maxWidth: 560, margin: '0 auto', padding: pad, paddingBottom: mobile ? 88 : 56, textAlign: 'center' }}>
+  const eyebrow = (text: string) => (
+    <p style={{
+      fontFamily: "'DM Mono', monospace",
+      fontSize: 11, letterSpacing: '0.15em', textTransform: 'uppercase',
+      color: 'var(--rp-text-muted)', marginBottom: '0.4rem',
+    }}>
+      {text}
+    </p>
+  );
 
-      {/* VERIFYING */}
+  return (
+    <div className="fade-in" style={{
+      maxWidth: 560, margin: '0 auto',
+      padding: mobile ? '2.5rem 1rem 5.5rem' : '4rem 2.5rem',
+      textAlign: 'center',
+    }}>
+
+      {/* ── Verifying ── */}
       {phase === 'verifying' && (
         <>
-          <div style={{ position: 'relative', width: 80, height: 80, margin: '0 auto 24px' }}>
+          <div style={{
+            position: 'relative', width: 80, height: 80, margin: '0 auto 1.5rem',
+          }}>
             <svg width="80" height="80" viewBox="0 0 80 80" style={{ position: 'absolute' }}>
-              <circle cx="40" cy="40" r="35" fill="none" stroke="var(--s3)" strokeWidth="3"/>
-              <circle cx="40" cy="40" r="35" fill="none" stroke="var(--accent)" strokeWidth="3" strokeLinecap="round"
-                strokeDasharray="220" strokeDashoffset="0" style={{ animation: 'spin 1.6s linear infinite', transformOrigin: '40px 40px' }}/>
+              <circle cx="40" cy="40" r="35" fill="none" stroke="var(--rp-border)" strokeWidth="2" />
+              <circle cx="40" cy="40" r="35" fill="none" stroke="var(--rp-accent-green)" strokeWidth="2"
+                strokeLinecap="round" strokeDasharray="220" strokeDashoffset="0"
+                style={{ animation: 'spin 1.6s linear infinite', transformOrigin: '40px 40px' }}
+              />
             </svg>
-            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26 }}>🔐</div>
+            <div style={{
+              position: 'absolute', inset: 0,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26,
+            }}>
+              🔐
+            </div>
           </div>
-          <h2 style={{ fontSize: mobile ? 20 : 22, fontWeight: 700, marginBottom: 6 }}>Verifying Access</h2>
-          <p style={{ color: 'var(--t2)', fontSize: 13, marginBottom: 28 }}>Confirming ownership on-chain via Tatum RPC</p>
 
-          <div style={{ background: '#050810', border: '1px solid var(--border)', borderRadius: 12, padding: mobile ? 14 : 18, textAlign: 'left', marginBottom: 20, position: 'relative', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'linear-gradient(90deg, transparent, var(--accent), transparent)', animation: 'scanline 2s linear infinite' }}/>
-            <div style={{ display: 'flex', gap: 5, marginBottom: 12 }}>
-              {['#FF4D6A', '#FFB347', '#00E5A0'].map(c => <div key={c} style={{ width: 9, height: 9, borderRadius: '50%', background: c, opacity: 0.7 }}/>)}
-              <span style={{ fontFamily: 'var(--mono)', fontSize: 10, color: 'var(--t3)', marginLeft: 6 }}>tatum-rpc · sui mainnet</span>
+          {eyebrow('Tatum RPC · Sui Mainnet')}
+          <h2 style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontSize: mobile ? 28 : 36, fontWeight: 600,
+            color: 'var(--rp-text-primary)', marginBottom: '0.35rem',
+          }}>
+            Verifying Access
+          </h2>
+          <p style={{
+            fontFamily: "'DM Mono', monospace",
+            fontSize: 13, color: 'var(--rp-text-muted)', marginBottom: '1.75rem', lineHeight: 1.6,
+          }}>
+            Confirming ownership on-chain via Tatum RPC
+          </p>
+
+          {/* Terminal block */}
+          <div style={{
+            background: 'var(--rp-bg-sunken)',
+            border: '0.5px solid var(--rp-border)',
+            borderRadius: 12, padding: mobile ? '1rem' : '1.25rem',
+            textAlign: 'left', marginBottom: '1.25rem',
+            position: 'relative', overflow: 'hidden',
+          }}>
+            <div style={{
+              position: 'absolute', top: 0, left: 0, right: 0, height: 1,
+              background: 'linear-gradient(90deg, transparent, var(--rp-accent-green), transparent)',
+              animation: 'scanline 2s linear infinite',
+            }} />
+            {/* Chrome dots */}
+            <div style={{ display: 'flex', gap: 5, marginBottom: '0.875rem' }}>
+              {['#C0392B', '#D4A853', '#2A6347'].map(c => (
+                <div key={c} style={{ width: 9, height: 9, borderRadius: '50%', background: c, opacity: 0.7 }} />
+              ))}
+              <span style={{
+                fontFamily: "'DM Mono', monospace",
+                fontSize: 10, color: 'var(--rp-text-muted)', marginLeft: 6,
+              }}>
+                tatum-rpc · sui mainnet
+              </span>
             </div>
             {CHECK_LABELS.map((label, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '4px 0', fontFamily: 'var(--mono)', fontSize: mobile ? 11 : 12 }}>
-                <span style={{ color: checks[i] ? 'var(--accent)' : i === doneCount ? 'var(--warn)' : 'var(--t3)', flexShrink: 0 }}>
+              <div key={i} style={{
+                display: 'flex', alignItems: 'center', gap: 8,
+                padding: '3px 0',
+                fontFamily: "'DM Mono', monospace",
+                fontSize: mobile ? 12 : 13,
+              }}>
+                <span style={{
+                  color: checks[i]
+                    ? 'var(--rp-accent-green)'
+                    : i === doneCount
+                      ? '#D4A853'
+                      : 'var(--rp-text-ghost)',
+                  flexShrink: 0, width: 12,
+                }}>
                   {checks[i] ? '✓' : i === doneCount ? '›' : '·'}
                 </span>
-                <span style={{ color: checks[i] ? 'var(--t2)' : i === doneCount ? 'var(--t1)' : 'var(--t3)' }}>{label}</span>
+                <span style={{
+                  color: checks[i]
+                    ? 'var(--rp-text-secondary)'
+                    : i === doneCount
+                      ? 'var(--rp-text-primary)'
+                      : 'var(--rp-text-ghost)',
+                }}>
+                  {label}
+                </span>
                 {i === doneCount && !checks[i] && (
-                  <span style={{ display: 'inline-block', width: 5, height: 11, background: 'var(--accent)', animation: 'blink 0.8s step-end infinite' }}/>
+                  <span style={{
+                    display: 'inline-block', width: 5, height: 12,
+                    background: 'var(--rp-accent-green)',
+                    animation: 'blink 0.8s step-end infinite',
+                  }} />
                 )}
               </div>
             ))}
           </div>
 
           {txHash && (
-            <div style={{ background: 'var(--s2)', borderRadius: 8, padding: '9px 13px', display: 'flex', gap: 8, alignItems: 'center', fontSize: 12 }}>
-              <span style={{ color: 'var(--t3)', flexShrink: 0, fontSize: 10 }}>TX</span>
-              <span style={{ fontFamily: 'var(--mono)', color: 'var(--t2)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 11 }}>{txHash}</span>
+            <div style={{
+              background: 'var(--rp-bg-surface)',
+              border: '0.5px solid var(--rp-border)',
+              borderRadius: 8, padding: '0.65rem 1rem',
+              display: 'flex', gap: 10, alignItems: 'center',
+            }}>
+              <span style={{
+                fontFamily: "'DM Mono', monospace",
+                fontSize: 9, color: 'var(--rp-text-muted)',
+                letterSpacing: '0.1em', textTransform: 'uppercase', flexShrink: 0,
+              }}>
+                TX
+              </span>
+              <span style={{
+                fontFamily: "'DM Mono', monospace",
+                fontSize: 12, color: 'var(--rp-text-secondary)',
+                overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+              }}>
+                {txHash}
+              </span>
             </div>
           )}
         </>
       )}
 
-      {/* READY */}
+      {/* ── Ready ── */}
       {phase === 'ready' && (
         <div className="fade-in">
-          <div style={{ width: 90, height: 90, borderRadius: '50%', background: 'var(--accent-dim)', border: '2px solid var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', fontSize: 38, boxShadow: '0 0 40px var(--accent-glo)' }}>🔓</div>
-          <h2 style={{ fontSize: mobile ? 22 : 26, fontWeight: 700, marginBottom: 6, color: 'var(--accent)' }}>Access Granted</h2>
-          <p style={{ color: 'var(--t2)', fontSize: 14, marginBottom: 10 }}>{file?.title}</p>
-          <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 28 }}>
-            <Badge color="var(--accent)" bg="var(--accent-dim)">✓ Verified</Badge>
-            <Badge color="var(--sui)" bg="var(--sui-dim)">Tatum RPC</Badge>
-            <Badge>{file?.size}</Badge>
+          <div style={{
+            width: 90, height: 90, borderRadius: '50%',
+            background: 'var(--rp-accent-green-tint)',
+            border: '0.5px solid var(--rp-accent-green-border)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            margin: '0 auto 1.5rem', fontSize: 38,
+          }}>
+            🔓
           </div>
-          <div style={{ background: 'var(--s1)', border: '1px solid rgba(0,229,160,0.2)', borderRadius: 12, padding: 16, textAlign: 'left', marginBottom: 24 }}>
-            {([['Walrus Blob', blobShort, true], ['Kiosk Object', (file?.kiosk?.slice(0, 14) ?? '') + '…', false], ['Verified by', 'Tatum RPC · Sui Mainnet', false]] as [string, string, boolean][]).map(([k, v, accent]) => (
-              <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid var(--border)', fontSize: 13 }}>
-                <span style={{ color: 'var(--t3)' }}>{k}</span>
-                <span style={{ fontFamily: 'var(--mono)', color: accent ? 'var(--accent)' : 'var(--t1)', fontSize: 11 }}>{v}</span>
+
+          {eyebrow('Access Granted')}
+          <h2 style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontSize: mobile ? 32 : 44, fontWeight: 600,
+            color: 'var(--rp-accent-green)', marginBottom: '0.35rem',
+            lineHeight: 0.96, letterSpacing: '-0.02em',
+          }}>
+            File unlocked.<br />
+            <em style={{ color: 'var(--rp-accent-green)', fontStyle: 'italic' }}>It's yours.</em>
+          </h2>
+          <p style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontSize: 18, color: 'var(--rp-text-secondary)',
+            marginBottom: '0.75rem', lineHeight: 1.6,
+          }}>
+            {file?.title}
+          </p>
+
+          <div style={{
+            display: 'flex', gap: 6, justifyContent: 'center', flexWrap: 'wrap',
+            marginBottom: '1.75rem',
+          }}>
+            {[
+              { label: '✓ Verified', color: 'var(--rp-accent-green)', bg: 'var(--rp-accent-green-tint)', border: 'var(--rp-accent-green-border)' },
+              { label: 'Tatum RPC', color: '#4F9FFF', bg: 'rgba(79,159,255,0.08)', border: 'rgba(79,159,255,0.25)' },
+              { label: file?.size ?? '', color: 'var(--rp-text-muted)', bg: 'var(--rp-bg-surface)', border: 'var(--rp-border)' },
+            ].map(b => (
+              <span key={b.label} style={{
+                fontFamily: "'DM Mono', monospace",
+                fontSize: 11, fontWeight: 500, letterSpacing: '0.06em',
+                padding: '3px 9px', borderRadius: 4,
+                color: b.color, background: b.bg,
+                border: `0.5px solid ${b.border}`,
+              }}>
+                {b.label}
+              </span>
+            ))}
+          </div>
+
+          <div style={{
+            background: 'var(--rp-bg-raised)',
+            border: '0.5px solid var(--rp-accent-green-border)',
+            borderRadius: 12, overflow: 'hidden', marginBottom: '1.5rem',
+            textAlign: 'left',
+          }}>
+            {([
+              ['Walrus Blob',  blobShort,                                          true  ],
+              ['Kiosk Object',(file?.kiosk?.slice(0, 14) ?? '') + '…',            false ],
+              ['Verified by', 'Tatum RPC · Sui Mainnet',                          false ],
+            ] as [string, string, boolean][]).map(([k, v, accent]) => (
+              <div key={k} style={{
+                display: 'flex', justifyContent: 'space-between',
+                padding: '0.75rem 1rem',
+                borderBottom: k !== 'Verified by' ? '0.5px solid var(--rp-border)' : 'none',
+              }}>
+                <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: 'var(--rp-text-muted)' }}>{k}</span>
+                <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: accent ? 'var(--rp-accent-green)' : 'var(--rp-text-primary)' }}>{v}</span>
               </div>
             ))}
           </div>
-          <Btn variant="primary" size="lg" full onClick={handleDownload}>↓ Download File</Btn>
+
+          <button onClick={handleDownload} style={{
+            width: '100%',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+            background: 'var(--rp-accent-green)', color: '#ECEAE4',
+            border: 'none', borderRadius: 50,
+            padding: '0.9rem 2rem',
+            fontFamily: "'DM Mono', monospace",
+            fontSize: 14, fontWeight: 500, cursor: 'pointer',
+            letterSpacing: '0.02em', transition: 'background 0.15s',
+          }}>
+            ↓ Download File
+          </button>
         </div>
       )}
 
-      {/* DOWNLOADING */}
+      {/* ── Downloading ── */}
       {phase === 'downloading' && (
         <div className="fade-in">
-          <div style={{ fontSize: 44, marginBottom: 24 }}>🌊</div>
-          <h2 style={{ fontSize: mobile ? 18 : 20, fontWeight: 700, marginBottom: 6 }}>Retrieving from Walrus</h2>
-          <p style={{ color: 'var(--t2)', fontSize: 13, marginBottom: 24 }}>Fetching your blob from the decentralized network</p>
-          <div style={{ background: 'var(--s2)', borderRadius: 100, height: 7, overflow: 'hidden', marginBottom: 8 }}>
-            <div style={{ height: '100%', width: `${dlProgress}%`, background: 'linear-gradient(90deg, var(--accent), var(--sui))', borderRadius: 100, transition: 'width 0.15s', boxShadow: '0 0 10px var(--accent-glo)' }}/>
+          <div style={{ fontSize: 44, marginBottom: '1.5rem' }}>🌊</div>
+          {eyebrow('Walrus Network')}
+          <h2 style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontSize: mobile ? 26 : 32, fontWeight: 600,
+            color: 'var(--rp-text-primary)', marginBottom: '0.35rem',
+          }}>
+            Retrieving from Walrus
+          </h2>
+          <p style={{
+            fontFamily: "'DM Mono', monospace",
+            fontSize: 13, color: 'var(--rp-text-muted)', marginBottom: '1.5rem', lineHeight: 1.6,
+          }}>
+            Fetching your blob from the decentralized network
+          </p>
+          <div style={{
+            background: 'var(--rp-bg-sunken)', borderRadius: 50,
+            height: 4, overflow: 'hidden', marginBottom: '0.5rem',
+            border: '0.5px solid var(--rp-border)',
+          }}>
+            <div style={{
+              height: '100%', width: `${dlProgress}%`,
+              background: 'var(--rp-accent-green)',
+              borderRadius: 50, transition: 'width 0.15s',
+            }} />
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'var(--t3)' }}>
+          <div style={{
+            display: 'flex', justifyContent: 'space-between',
+            fontFamily: "'DM Mono', monospace",
+            fontSize: 12, color: 'var(--rp-text-muted)',
+          }}>
             <Mono>blob.{file?.type} ← walrus</Mono>
-            <span style={{ color: 'var(--accent)', fontWeight: 600 }}>{dlProgress}%</span>
+            <span style={{ color: 'var(--rp-accent-green)', fontWeight: 500 }}>{dlProgress}%</span>
           </div>
         </div>
       )}
 
-      {/* DONE */}
+      {/* ── Done ── */}
       {phase === 'done' && (
         <div className="fade-in">
-          <div style={{ width: 86, height: 86, borderRadius: '50%', background: 'var(--accent-dim)', border: '2px solid var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 36, boxShadow: '0 0 50px rgba(0,229,160,0.4)', margin: '0 auto 22px' }}>✓</div>
-          <h2 style={{ fontSize: mobile ? 18 : 22, fontWeight: 800, color: 'var(--accent)', marginBottom: 8, fontFamily: 'var(--mono)', wordBreak: 'break-word' }}>
+          <div style={{
+            width: 86, height: 86, borderRadius: '50%',
+            background: 'var(--rp-accent-green-tint)',
+            border: '0.5px solid var(--rp-accent-green-border)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 36, margin: '0 auto 1.25rem',
+            color: 'var(--rp-accent-green)',
+          }}>
+            ✓
+          </div>
+
+          {eyebrow('Complete')}
+          <h2 style={{
+            fontFamily: "'DM Mono', monospace",
+            fontSize: mobile ? 16 : 18, fontWeight: 500,
+            color: 'var(--rp-accent-green)', marginBottom: '0.5rem',
+            wordBreak: 'break-word', lineHeight: 1.4,
+          }}>
             {chars}<span style={{ animation: 'blink 0.8s step-end infinite' }}>_</span>
           </h2>
-          <p style={{ color: 'var(--t2)', fontSize: 13, marginBottom: 24 }}>Retrieved from Walrus and saved to your device.</p>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 24 }}>
-            {([['TX', txHash ? txHash.slice(0, 8) + '…' : '—'], ['Type', (file?.type ?? '—').toUpperCase()], ['Size', file?.size ?? '—'], ['Network', 'Sui Mainnet']] as [string, string][]).map(([k, v]) => (
-              <div key={k} style={{ background: 'var(--s1)', border: '1px solid var(--border)', borderRadius: 10, padding: '12px 14px', textAlign: 'left' }}>
-                <div style={{ fontSize: 10, color: 'var(--t3)', marginBottom: 5, textTransform: 'uppercase', letterSpacing: 0.8 }}>{k}</div>
-                <div style={{ fontFamily: 'var(--mono)', fontSize: 12, color: 'var(--t1)', fontWeight: 500 }}>{v}</div>
+          <p style={{
+            fontFamily: "'DM Mono', monospace",
+            fontSize: 13, color: 'var(--rp-text-muted)', marginBottom: '1.5rem', lineHeight: 1.6,
+          }}>
+            Retrieved from Walrus and saved to your device.
+          </p>
+
+          <div style={{
+            display: 'grid', gridTemplateColumns: '1fr 1fr',
+            gap: '0.625rem', marginBottom: '1.5rem',
+          }}>
+            {([
+              ['TX',      txHash ? txHash.slice(0, 8) + '…' : '—'],
+              ['Type',    (file?.type ?? '—').toUpperCase()        ],
+              ['Size',    file?.size ?? '—'                        ],
+              ['Network', 'Sui Mainnet'                            ],
+            ] as [string, string][]).map(([k, v]) => (
+              <div key={k} style={{
+                background: 'var(--rp-bg-raised)',
+                border: '0.5px solid var(--rp-border)',
+                borderRadius: 10, padding: '0.875rem 1rem',
+                textAlign: 'left',
+              }}>
+                <div style={{
+                  fontFamily: "'DM Mono', monospace",
+                  fontSize: 10, color: 'var(--rp-text-muted)',
+                  letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.35rem',
+                }}>
+                  {k}
+                </div>
+                <div style={{
+                  fontFamily: "'DM Mono', monospace",
+                  fontSize: 13, color: 'var(--rp-text-primary)', fontWeight: 500,
+                }}>
+                  {v}
+                </div>
               </div>
             ))}
           </div>
-          <Btn variant="ghost" full onClick={onBack}>← Back to Marketplace</Btn>
+
+          <button onClick={onBack} style={{
+            width: '100%',
+            fontFamily: "'DM Mono', monospace",
+            fontSize: 13, fontWeight: 500, padding: '0.75rem',
+            borderRadius: 8, background: 'transparent',
+            border: '0.5px solid var(--rp-border-strong)',
+            color: 'var(--rp-text-primary)', cursor: 'pointer',
+          }}>
+            ← Back to Marketplace
+          </button>
         </div>
       )}
     </div>
