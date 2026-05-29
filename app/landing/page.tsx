@@ -113,14 +113,14 @@ function StepTerminal({ step, active }: { step: typeof STEP_TERMINALS[0]; active
           {['#C0392B','#D4A853','#2A6347'].map(c => (
             <div key={c} style={{ width: 9, height: 9, borderRadius: '50%', background: c, opacity: active ? 0.9 : 0.4 }} />
           ))}
-          <span style={{ fontSize: 10, color: '#5A5A52', marginLeft: 6, letterSpacing: '0.07em' }}>{step.filename}</span>
+          <span style={{ fontSize: 11, color: '#888880', marginLeft: 6, letterSpacing: '0.07em' }}>{step.filename}</span>
         </div>
         <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, letterSpacing: '0.12em', color: active ? step.tagColor : '#3A3A34', border: `0.5px solid ${active ? step.tagColor + '60' : '#3A3A34'}`, borderRadius: 4, padding: '2px 7px', transition: 'all 0.3s' }}>{step.tag}</span>
       </div>
       {/* lines */}
       <div style={{ padding: '14px 18px', minHeight: 148, display: 'flex', flexDirection: 'column', gap: 1 }}>
         {step.lines.slice(0, shown).map((l, i) => (
-          <div key={i} style={{ fontSize: 11.5, color: active ? l.color : '#3A3A34', lineHeight: 1.8, animation: 'lpFadeUp 0.25s cubic-bezier(0.22,1,0.36,1) both', transition: 'color 0.4s' }}>
+          <div key={i} style={{ fontSize: 15, color: active ? l.color : '#3A3A34', lineHeight: 1.8, animation: 'lpFadeUp 0.25s cubic-bezier(0.22,1,0.36,1) both', transition: 'color 0.4s' }}>
             {l.text}
             {i === shown - 1 && !done && (
               <span style={{ display: 'inline-block', width: 5, height: 12, background: '#ECEAE4', marginLeft: 2, opacity: cursor ? 1 : 0, verticalAlign: 'text-bottom' }} />
@@ -128,7 +128,7 @@ function StepTerminal({ step, active }: { step: typeof STEP_TERMINALS[0]; active
           </div>
         ))}
         {done && active && (
-          <div style={{ fontSize: 11.5, color: '#ECEAE4', lineHeight: 1.8 }}>
+          <div style={{ fontSize: 15, color: '#ECEAE4', lineHeight: 1.8 }}>
             $ <span style={{ display: 'inline-block', width: 5, height: 12, background: '#ECEAE4', marginLeft: 2, opacity: cursor ? 1 : 0, verticalAlign: 'text-bottom' }} />
           </div>
         )}
@@ -167,7 +167,7 @@ function ThreeTerminals() {
         ? '3rem 1.25rem 2.5rem'
         : 'clamp(4rem,8vw,6rem) clamp(1.25rem,5vw,2.5rem)',
     }}>
-      <p style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#5A5A52', marginBottom: '1rem' }}>
+      <p style={{ fontFamily: "'DM Mono',monospace", fontSize: 14, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#AAAAAA', marginBottom: '1rem', fontWeight: 500 }}>
         02 — HOW IT WORKS
       </p>
       <h2 style={{
@@ -261,11 +261,11 @@ function ThreeTerminals() {
           }}>
             {(!mobile || active === i) && (
               <>
-                <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, color: st.tagColor, letterSpacing: '0.12em', marginBottom: '0.4rem' }}>{st.num} — {st.tag}</div>
-                <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: mobile ? 18 : 16, fontWeight: 500, color: '#ECEAE4', lineHeight: 1.25, marginBottom: '0.4rem' }}>
+                <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 13, color: st.tagColor, letterSpacing: '0.12em', marginBottom: '0.4rem', fontWeight: 500 }}>{st.num} — {st.tag}</div>
+                <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: mobile ? 22 : 20, fontWeight: 600, color: '#ECEAE4', lineHeight: 1.25, marginBottom: '0.4rem' }}>
                   {st.title} <em style={{ color: st.tagColor, fontStyle: 'italic' }}>{st.italic}</em>
                 </div>
-                <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: mobile ? 15 : 13, color: '#9A9A8E', lineHeight: 1.6 }}>{st.body}</div>
+                <div style={{ fontFamily: "'DM Mono',monospace", fontSize: mobile ? 14 : 13, color: '#CCCCCC', lineHeight: 1.7 }}>{st.body}</div>
               </>
             )}
           </div>
@@ -310,7 +310,7 @@ function FeatureSection() {
     <section ref={ref as React.RefObject<HTMLElement>} style={{
       background: '#ECEAE4', padding: 'clamp(4rem,8vw,6rem) clamp(1.25rem,5vw,2.5rem)',
     }}>
-      <p style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#7A7A70', marginBottom: '1.5rem' }}>
+      <p style={{ fontFamily: "'DM Mono',monospace", fontSize: 14, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#3A3A32', marginBottom: '1.5rem', fontWeight: 500 }}>
         03 — THE STACK
       </p>
       <h2 style={{
@@ -332,21 +332,21 @@ function FeatureSection() {
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
               <span className="lp-feature-icon" style={{ fontSize: 24 }}>{f.icon}</span>
-              <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, letterSpacing: '0.12em', color: '#7A7A70', border: '0.5px solid rgba(0,0,0,0.15)', borderRadius: 4, padding: '2px 7px' }}>{f.tag}</span>
+              <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 12, letterSpacing: '0.12em', color: '#2A2A24', border: '1px solid rgba(0,0,0,0.25)', borderRadius: 4, padding: '3px 8px', fontWeight: 500 }}>{f.tag}</span>
             </div>
             <h3 style={{
               fontFamily: "'Cormorant Garamond', Georgia, serif",
-              fontSize: 22, fontWeight: 500, color: '#1C1C1A', lineHeight: 1.25, marginBottom: '0.75rem',
+              fontSize: 24, fontWeight: 600, color: '#0A0A08', lineHeight: 1.25, marginBottom: '0.75rem',
             }}>
               {f.title}<br /><em style={{ color: '#1F4A35', fontStyle: 'italic' }}>{f.italic}</em>
             </h3>
-            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 15, color: '#4A4A42', lineHeight: 1.65, marginBottom: '1.5rem' }}>
+            <p style={{ fontFamily: "'DM Mono', monospace", fontSize: 14, color: '#1C1C1A', lineHeight: 1.7, marginBottom: '1.5rem' }}>
               {f.body}
             </p>
             {/* slim stat bar */}
             <div style={{ borderTop: '0.5px solid rgba(0,0,0,0.08)', paddingTop: '1rem', display: 'flex', alignItems: 'baseline', gap: 8 }}>
-              <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 22, fontWeight: 500, color: '#1F4A35' }}>{f.stat}</span>
-              <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: '#7A7A70', letterSpacing: '0.05em' }}>{f.statLabel}</span>
+              <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 28, fontWeight: 600, color: '#1F4A35' }}>{f.stat}</span>
+              <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 14, color: '#2A2A24', letterSpacing: '0.05em', fontWeight: 500 }}>{f.statLabel}</span>
             </div>
           </div>
         ))}
@@ -362,7 +362,7 @@ function AudienceSection() {
     <section ref={ref as React.RefObject<HTMLElement>} style={{
       background: '#0E0E0C', padding: 'clamp(4rem,8vw,6rem) clamp(1.25rem,5vw,2.5rem)',
     }}>
-      <p style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#5A5A52', marginBottom: '1.5rem' }}>
+      <p style={{ fontFamily: "'DM Mono',monospace", fontSize: 14, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#AAAAAA', marginBottom: '1.5rem', fontWeight: 500 }}>
         04 — WHO IT'S FOR
       </p>
 
@@ -374,7 +374,7 @@ function AudienceSection() {
           opacity: visible ? 1 : 0,
           transition: 'transform 0.6s cubic-bezier(0.22,1,0.36,1), opacity 0.6s ease',
         }}>
-          <p style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: '#2A6347', letterSpacing: '0.12em', marginBottom: '1.25rem' }}>FOR SELLERS</p>
+          <p style={{ fontFamily: "'DM Mono',monospace", fontSize: 14, color: '#2A9460', letterSpacing: '0.12em', marginBottom: '1.25rem', fontWeight: 500 }}>FOR SELLERS</p>
           <h3 style={{
             fontFamily: "'Cormorant Garamond', Georgia, serif",
             fontSize: 'clamp(28px,3vw,40px)', fontWeight: 600, color: '#ECEAE4', lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '1.5rem',
@@ -391,8 +391,8 @@ function AudienceSection() {
               <div key={title} style={{ display: 'flex', gap: '0.875rem', alignItems: 'flex-start' }}>
                 <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#1F4A35', marginTop: 8, flexShrink: 0 }} />
                 <div>
-                  <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 11, color: '#ECEAE4', marginBottom: 2 }}>{title}</div>
-                  <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 14, color: '#9A9A8E', lineHeight: 1.55 }}>{desc}</div>
+                  <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 15, color: '#FFFFFF', marginBottom: 2, fontWeight: 500 }}>{title}</div>
+                  <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 13, color: '#CCCCCC', lineHeight: 1.6 }}>{desc}</div>
                 </div>
               </div>
             ))}
@@ -406,7 +406,7 @@ function AudienceSection() {
           opacity: visible ? 1 : 0,
           transition: 'transform 0.6s cubic-bezier(0.22,1,0.36,1) 0.1s, opacity 0.6s ease 0.1s',
         }}>
-          <p style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: '#2A6347', letterSpacing: '0.12em', marginBottom: '1.25rem' }}>FOR BUYERS</p>
+          <p style={{ fontFamily: "'DM Mono',monospace", fontSize: 12, color: '#2A9460', letterSpacing: '0.12em', marginBottom: '1.25rem', fontWeight: 500 }}>FOR BUYERS</p>
           <h3 style={{
             fontFamily: "'Cormorant Garamond', Georgia, serif",
             fontSize: 'clamp(28px,3vw,40px)', fontWeight: 600, color: '#ECEAE4', lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '1.5rem',
@@ -423,8 +423,8 @@ function AudienceSection() {
               <div key={title} style={{ display: 'flex', gap: '0.875rem', alignItems: 'flex-start' }}>
                 <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#1F4A35', marginTop: 8, flexShrink: 0 }} />
                 <div>
-                  <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 11, color: '#ECEAE4', marginBottom: 2 }}>{title}</div>
-                  <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 14, color: '#9A9A8E', lineHeight: 1.55 }}>{desc}</div>
+                  <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 15, color: '#FFFFFF', marginBottom: 2, fontWeight: 500 }}>{title}</div>
+                  <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 13, color: '#CCCCCC', lineHeight: 1.6 }}>{desc}</div>
                 </div>
               </div>
             ))}
@@ -457,8 +457,8 @@ function StatsSection() {
             opacity: visible ? 1 : 0,
             transition: `transform 0.5s cubic-bezier(0.22,1,0.36,1) ${i * 0.07}s, opacity 0.5s ease ${i * 0.07}s`,
           }}>
-            <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 26, fontWeight: 500, color: '#1F4A35', marginBottom: 4 }}>{s.n}</div>
-            <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: '#7A7A70', letterSpacing: '0.05em', lineHeight: 1.5 }}>{s.label}</div>
+            <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 32, fontWeight: 600, color: '#1F4A35', marginBottom: 4 }}>{s.n}</div>
+            <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 14, color: '#2A2A24', letterSpacing: '0.05em', lineHeight: 1.5, fontWeight: 500 }}>{s.label}</div>
           </div>
         ))}
       </div>
@@ -475,8 +475,8 @@ function CtaSection() {
       textAlign: 'center',
     }}>
       <p style={{
-        fontFamily: "'DM Mono',monospace", fontSize: 10, letterSpacing: '0.15em',
-        textTransform: 'uppercase', color: '#5A5A52', marginBottom: '1.5rem',
+        fontFamily: "'DM Mono',monospace", fontSize: 14, letterSpacing: '0.15em',
+        textTransform: 'uppercase', color: '#AAAAAA', marginBottom: '1.5rem', fontWeight: 500,
         transform: visible ? 'translateY(0)' : 'translateY(14px)',
         opacity: visible ? 1 : 0,
         transition: 'transform 0.5s cubic-bezier(0.22,1,0.36,1), opacity 0.5s',
@@ -493,8 +493,8 @@ function CtaSection() {
         <em style={{ color: '#D4A853', fontStyle: 'italic' }}>The network's hands.</em>
       </h2>
       <p style={{
-        fontFamily: "'Cormorant Garamond', Georgia, serif",
-        fontSize: 18, color: '#9A9A8E', lineHeight: 1.65, maxWidth: 480, margin: '0 auto 2.5rem',
+        fontFamily: "'DM Mono', monospace",
+        fontSize: 17, color: '#CCCCCC', lineHeight: 1.75, maxWidth: 480, margin: '0 auto 2.5rem',
         transform: visible ? 'translateY(0)' : 'translateY(16px)',
         opacity: visible ? 1 : 0,
         transition: 'transform 0.55s cubic-bezier(0.22,1,0.36,1) 0.16s, opacity 0.55s ease 0.16s',
@@ -512,7 +512,7 @@ function CtaSection() {
           display: 'inline-flex', alignItems: 'center', gap: 8,
           background: '#1F4A35', color: '#ECEAE4',
           border: 'none', borderRadius: 50, padding: '0.9rem 2rem',
-          fontFamily: "'DM Mono',monospace", fontSize: 13, cursor: 'pointer',
+          fontFamily: "'DM Mono',monospace", fontSize: 15, cursor: 'pointer',
           letterSpacing: '0.02em', textDecoration: 'none',
           transition: 'background 0.15s',
         }}>
@@ -520,11 +520,12 @@ function CtaSection() {
         </Link>
         <a href="https://docs.walrus.space" target="_blank" rel="noopener noreferrer" style={{
           display: 'inline-flex', alignItems: 'center', gap: 8,
-          background: 'transparent', color: '#9A9A8E',
-          border: '0.5px solid rgba(255,255,255,0.15)', borderRadius: 50, padding: '0.9rem 2rem',
-          fontFamily: "'DM Mono',monospace", fontSize: 13, cursor: 'pointer',
+          background: 'transparent', color: '#DDDDDD',
+          border: '1.5px solid rgba(255,255,255,0.35)', borderRadius: 50, padding: '0.9rem 2rem',
+          fontFamily: "'DM Mono',monospace", fontSize: 15, cursor: 'pointer',
           letterSpacing: '0.02em', textDecoration: 'none',
           transition: 'border-color 0.15s, color 0.15s',
+          fontWeight: 500,
         }}>
           Read the docs
         </a>
@@ -565,14 +566,15 @@ export default function LandingPage() {
 
         .lp-nav-link {
           font-family: 'DM Mono', monospace;
-          font-size: 11px;
+          font-size: 14px;
           letter-spacing: 0.08em;
           text-transform: uppercase;
-          color: #4A4A42;
+          color: #2A2A24;
           text-decoration: none;
           transition: color 0.12s;
+          font-weight: 500;
         }
-        .lp-nav-link:hover { color: #1C1C1A; }
+        .lp-nav-link:hover { color: #000000; }
 
         .lp-btn-ghost {
           font-family: 'DM Mono', monospace;
@@ -593,10 +595,10 @@ export default function LandingPage() {
 
         .lp-btn-solid {
           font-family: 'DM Mono', monospace;
-          font-size: 12px;
-          padding: 0.45rem 1rem;
+          font-size: 15px;
+          padding: 0.6rem 1.2rem;
           background: #1C1C1A;
-          color: #ECEAE4;
+          color: #FFFFFF;
           border: none;
           border-radius: 8px;
           cursor: pointer;
@@ -606,8 +608,9 @@ export default function LandingPage() {
           gap: 6px;
           text-decoration: none;
           transition: background 0.15s;
+          font-weight: 500;
         }
-        .lp-btn-solid:hover { background: #2A2A26; }
+        .lp-btn-solid:hover { background: #000000; }
 
         .lp-step-card:hover { border-color: rgba(31,74,53,0.4) !important; }
 
@@ -673,7 +676,7 @@ export default function LandingPage() {
               <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 13, fontWeight: 500, color: '#1C1C1A', lineHeight: 1.2, letterSpacing: '-0.01em' }}>
                 SUI<span style={{ color: '#1F4A35' }}>-Walrus</span>
               </div>
-              <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 8, color: '#7A7A70', letterSpacing: '0.12em', textTransform: 'uppercase' }}>File Marketplace</div>
+              <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: '#4A4A42', letterSpacing: '0.12em', textTransform: 'uppercase' }}>File Marketplace</div>
             </div>
           </div>
 
@@ -698,9 +701,10 @@ export default function LandingPage() {
             : 'clamp(4rem,8vw,7rem) clamp(1.25rem,5vw,2.5rem) clamp(3rem,6vw,5rem)',
         }}>
           <p style={{
-            fontFamily: "'DM Mono',monospace", fontSize: 10, letterSpacing: '0.15em',
-            textTransform: 'uppercase', color: '#7A7A70', marginBottom: '1rem',
+            fontFamily: "'DM Mono',monospace", fontSize: 14, letterSpacing: '0.15em',
+            textTransform: 'uppercase', color: '#3A3A32', marginBottom: '1rem',
             animation: 'lpFadeUp 0.55s cubic-bezier(0.22,1,0.36,1) both',
+            fontWeight: 500,
           }}>
             01 — DECENTRALIZED FILE MARKETPLACE
           </p>
@@ -724,8 +728,8 @@ export default function LandingPage() {
                 <em style={{ color: '#1F4A35', fontStyle: 'italic' }}>Keep the keys.</em>
               </h1>
               <p style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
-                fontSize: mobile ? 16 : 18, color: '#4A4A42', lineHeight: 1.65,
+                fontFamily: "'DM Mono', monospace",
+                fontSize: mobile ? 15 : 17, color: '#1C1C1A', lineHeight: 1.75,
                 maxWidth: '34ch', marginBottom: '1.5rem',
                 animation: 'lpFadeUp 0.55s cubic-bezier(0.22,1,0.36,1) 0.16s both',
               }}>
@@ -749,11 +753,12 @@ export default function LandingPage() {
                 </Link>
                 <a href="#how" style={{
                   display: 'inline-flex', alignItems: 'center', gap: 8,
-                  background: 'transparent', color: '#4A4A42', textDecoration: 'none',
-                  border: '0.5px solid rgba(0,0,0,0.2)', borderRadius: 50,
+                  background: 'transparent', color: '#1C1C1A', textDecoration: 'none',
+                  border: '1.5px solid rgba(0,0,0,0.4)', borderRadius: 50,
                   padding: mobile ? '0.75rem 1.5rem' : '0.9rem 2rem',
                   fontFamily: "'DM Mono',monospace", fontSize: mobile ? 12 : 13,
                   cursor: 'pointer', letterSpacing: '0.02em', transition: 'border-color 0.15s',
+                  fontWeight: 500,
                 }}>
                   See how it works
                 </a>
@@ -766,8 +771,8 @@ export default function LandingPage() {
               }}>
                 {[['🌊','Walrus Storage'],['🔵','Sui Mainnet'],['⚡','Tatum RPC']].map(([ic, label]) => (
                   <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-                    <span style={{ fontSize: 12 }}>{ic}</span>
-                    <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: '#7A7A70', letterSpacing: '0.06em' }}>{label}</span>
+                    <span style={{ fontSize: 16 }}>{ic}</span>
+                    <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 14, color: '#2A2A24', letterSpacing: '0.06em', fontWeight: 500 }}>{label}</span>
                   </div>
                 ))}
               </div>
@@ -780,13 +785,13 @@ export default function LandingPage() {
                   <div key={i} style={{ background: '#0E0E0C', border: `0.5px solid ${s.tagColor}33`, borderLeft: `2px solid ${s.tagColor}`, borderRadius: 8, padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
                     <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: s.tagColor, flexShrink: 0 }}>{s.num}</span>
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: '#5A5A52', marginBottom: 3, letterSpacing: '0.08em' }}>{s.tag}</div>
-                      <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 11, color: '#9A9A8E', lineHeight: 1.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.lines[0].text}</div>
+                      <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 12, color: '#AAAAAA', marginBottom: 3, letterSpacing: '0.08em' }}>{s.tag}</div>
+                      <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 13, color: '#CCCCCC', lineHeight: 1.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.lines[0].text}</div>
                       <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 11, color: s.tagColor, marginTop: 2 }}>✓ {s.label}</div>
                     </div>
                   </div>
                 ))}
-                <a href="#how" style={{ fontFamily: "'DM Mono',monospace", fontSize: 11, color: '#5A5A52', textDecoration: 'none', textAlign: 'center', paddingTop: 4, letterSpacing: '0.06em' }}>
+                <a href="#how" style={{ fontFamily: "'DM Mono',monospace", fontSize: 14, color: '#AAAAAA', textDecoration: 'none', textAlign: 'center', paddingTop: 4, letterSpacing: '0.06em' }}>
                   see it live ↓
                 </a>
               </div>
@@ -815,7 +820,7 @@ export default function LandingPage() {
           padding: '2rem 2.5rem',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem',
         }}>
-          <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: '#3A3A34', letterSpacing: '0.06em' }}>
+          <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 14, color: '#888880', letterSpacing: '0.06em' }}>
             SUI-Walrus · Decentralized File Marketplace
           </div>
           <div style={{ display: 'flex', gap: '1.5rem' }}>
@@ -825,7 +830,7 @@ export default function LandingPage() {
               ['Tatum', 'https://docs.tatum.io'],
               ['GitHub', 'https://github.com/King-Austin/sui-walrus'],
             ].map(([label, href]) => (
-              <a key={label} href={href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: '#3A3A34', textDecoration: 'none', letterSpacing: '0.06em', transition: 'color 0.12s' }}>
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'DM Mono',monospace", fontSize: 14, color: '#888880', textDecoration: 'none', letterSpacing: '0.06em', transition: 'color 0.12s' }}>
                 {label}
               </a>
             ))}
