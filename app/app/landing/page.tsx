@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { useViewport } from '@/hooks/useViewport';
 
 /* ── Intersection observer hook ── */
 function useInView(threshold = 0.18) {
@@ -17,240 +18,255 @@ function useInView(threshold = 0.18) {
   return { ref, visible };
 }
 
-/* ── Animated terminal ── */
-const TERMINAL_LINES = [
-  { delay: 0,    text: '$ walrus upload research-paper.pdf',              color: '#ECEAE4' },
-  { delay: 650,  text: '  ↑ uploading 2.4 MB → publisher node…',          color: '#9A9A8E' },
-  { delay: 1300, text: '  ✓ blob certified — 2-of-N erasure coded',        color: '#2A6347' },
-  { delay: 1950, text: '  blobId: bAEKDJ3ma9Nz7qL4xP2wR8sT5vU6…',        color: '#D4A853' },
-  { delay: 2600, text: '  epochs: 5  redundancy: 2-of-N  size: 2.4 MB',   color: '#9A9A8E' },
-  { delay: 3300, text: '$ sui kiosk create --price 5 SUI',                 color: '#ECEAE4' },
-  { delay: 3950, text: '  ✓ KioskOwnerCap minted → 0x7f3a…b12c',          color: '#2A6347' },
-  { delay: 4600, text: '  ✓ listing live on walrus-market.vercel.app',     color: '#2A6347' },
-  { delay: 5400, text: '$ tatum sui getObject 0x9f2e8d1c…',               color: '#ECEAE4' },
-  { delay: 6050, text: '  owner: { AddressOwner: "0x4a21…9e3f" }',        color: '#9A9A8E' },
-  { delay: 6700, text: '  ✓ ownership verified — access granted',          color: '#2A6347' },
-  { delay: 7400, text: '$ walrus download bAEKDJ3ma9Nz7qL4xP2wR8sT5vU6…', color: '#ECEAE4' },
-  { delay: 8050, text: '  ↓ fetching from aggregator node…',               color: '#9A9A8E' },
-  { delay: 8700, text: '  ✓ research-paper.pdf  saved to ./downloads/',    color: '#2A6347' },
+/* ── Three-step terminal data ── */
+const STEP_TERMINALS = [
+  {
+    num: '01',
+    label: 'Store the file',
+    tag: 'WALRUS STORAGE',
+    tagColor: '#2A6347',
+    title: 'Upload.',
+    italic: 'Walrus keeps it.',
+    body: 'Your file becomes a certified blob across 200+ storage nodes. 2-of-N erasure coded. No server. No AWS.',
+    filename: 'walrus — bash',
+    lines: [
+      { delay: 0,    text: '$ walrus upload market-data-q2.csv',        color: '#ECEAE4' },
+      { delay: 700,  text: '  ↑ uploading 45 MB → publisher node…',     color: '#9A9A8E' },
+      { delay: 1400, text: '  ✓ blob certified  —  2-of-N redundancy',  color: '#2A6347' },
+      { delay: 2100, text: '  blobId  bAEOPR7xk2Bt6mY8wQ5nS4hJ3iG9rE…',color: '#D4A853' },
+      { delay: 2800, text: '  size    45 MB   epochs  5   nodes  200+', color: '#9A9A8E' },
+      { delay: 3500, text: '  url     aggregator.walrus-testnet.walrus…',color: '#9A9A8E' },
+    ],
+  },
+  {
+    num: '02',
+    label: 'List on Sui',
+    tag: 'SUI KIOSK',
+    tagColor: '#4F9FFF',
+    title: 'Price it.',
+    italic: 'Sui holds the lock.',
+    body: 'A Kiosk object goes on-chain with your price in SUI. Buyers who pay receive a KioskOwnerCap — on-chain proof of access.',
+    filename: 'sui — bash',
+    lines: [
+      { delay: 0,    text: '$ sui kiosk create \\',                       color: '#ECEAE4' },
+      { delay: 0,    text: '    --blob bAEOPR7xk2Bt6mY8wQ5nS4hJ3iG9rE…',color: '#9A9A8E' },
+      { delay: 0,    text: '    --price 15 SUI',                          color: '#9A9A8E' },
+      { delay: 700,  text: '  ✓ KioskOwnerCap minted',                   color: '#2A6347' },
+      { delay: 1400, text: '  objectId   0x9f2e8d1c3a5b7e4f62a1b9c3…',  color: '#D4A853' },
+      { delay: 2100, text: '  seller     0x4a21…9e3f',                   color: '#9A9A8E' },
+      { delay: 2800, text: '  price      15 SUI',                        color: '#9A9A8E' },
+      { delay: 3500, text: '  ✓ listing live  →  walrus-market.vercel', color: '#2A6347' },
+    ],
+  },
+  {
+    num: '03',
+    label: 'Buyer gets access',
+    tag: 'TATUM RPC',
+    tagColor: '#D4A853',
+    title: 'Pay once.',
+    italic: 'Tatum confirms it.',
+    body: "Buyer pays. Tatum's Sui RPC verifies the KioskOwnerCap transfer. Access granted. File retrieved from Walrus. Done.",
+    filename: 'tatum rpc — verify',
+    lines: [
+      { delay: 0,    text: '$ tatum sui getObject 0x9f2e8d1c3a5b7e4f…', color: '#ECEAE4' },
+      { delay: 700,  text: '  objectId   0x9f2e8d1c3a5b7e4f62a1b9c3…',  color: '#9A9A8E' },
+      { delay: 1400, text: '  owner      0x4a21…9e3f  ← buyer wallet',  color: '#D4A853' },
+      { delay: 2100, text: '  ✓ ownership verified  —  access granted', color: '#2A6347' },
+      { delay: 2800, text: '$ walrus download bAEOPR7xk2Bt6mY8wQ5nS4h…',color: '#ECEAE4' },
+      { delay: 3500, text: '  ↓ fetching from aggregator…',              color: '#9A9A8E' },
+      { delay: 4200, text: '  ✓ market-data-q2.csv  →  ./downloads/',   color: '#2A6347' },
+    ],
+  },
 ];
 
-/* token colours */
-const T = {
-  kw:   '#D4A853', /* keyword / method */
-  str:  '#2A6347', /* string */
-  num:  '#4F9FFF', /* number / id */
-  cmt:  '#5A5A52', /* comment */
-  fn:   '#ECEAE4', /* function / symbol */
-  dim:  '#9A9A8E', /* punctuation */
-};
-
-const CODE_SNIPPET = [
-  { tokens: [{ t: '// verify ownership before granting access', c: T.cmt }] },
-  { tokens: [] },
-  { tokens: [{ t: 'const ', c: T.dim }, { t: 'obj', c: T.fn }, { t: ' = await ', c: T.dim }, { t: 'getSuiObject', c: T.kw }, { t: '(', c: T.dim }, { t: 'kioskId', c: T.fn }, { t: ');', c: T.dim }] },
-  { tokens: [{ t: 'const ', c: T.dim }, { t: 'owner', c: T.fn }, { t: ' = ', c: T.dim }, { t: 'obj', c: T.fn }, { t: '.owner?.AddressOwner;', c: T.dim }] },
-  { tokens: [] },
-  { tokens: [{ t: 'if ', c: T.kw }, { t: '(owner?.toLowerCase() === wallet.toLowerCase()) {', c: T.dim }] },
-  { tokens: [{ t: '  return ', c: T.kw }, { t: 'getBlobUrl', c: T.kw }, { t: '(', c: T.dim }, { t: 'blobId', c: T.fn }, { t: ');', c: T.dim }, { t: '  // ✓ unlock', c: T.str }] },
-  { tokens: [{ t: '}', c: T.dim }] },
-  { tokens: [] },
-  { tokens: [{ t: '// → ', c: T.cmt }, { t: '"https://aggregator.walrus.space/v1/blobs/bAEKDJ…"', c: T.str }] },
-];
-
-function Terminal() {
+/* ── Single animated terminal window ── */
+function StepTerminal({ step, active }: { step: typeof STEP_TERMINALS[0]; active: boolean }) {
   const [shown, setShown] = useState(0);
   const [cursor, setCursor] = useState(true);
+  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   useEffect(() => {
-    const timers = TERMINAL_LINES.map((l, i) =>
-      setTimeout(() => setShown(i + 1), l.delay)
+    if (!active) { setShown(0); return; }
+    timersRef.current.forEach(clearTimeout);
+    timersRef.current = step.lines.map((l, i) =>
+      setTimeout(() => setShown(i + 1), l.delay + 300)
     );
     const blink = setInterval(() => setCursor(c => !c), 530);
-    return () => { timers.forEach(clearTimeout); clearInterval(blink); };
-  }, []);
+    return () => { timersRef.current.forEach(clearTimeout); clearInterval(blink); };
+  }, [active, step]);
+
+  const done = shown >= step.lines.length;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      {/* ── bash terminal ── */}
-      <div style={{
-        background: '#0E0E0C', border: '0.5px solid rgba(255,255,255,0.12)',
-        borderRadius: 12, overflow: 'hidden', fontFamily: "'DM Mono', 'JetBrains Mono', monospace",
-      }}>
-        {/* chrome */}
-        <div style={{ padding: '10px 14px', borderBottom: '0.5px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', gap: 7 }}>
+    <div style={{
+      background: '#0E0E0C',
+      border: `0.5px solid ${active ? step.tagColor + '55' : 'rgba(255,255,255,0.10)'}`,
+      borderTop: `2px solid ${active ? step.tagColor : 'transparent'}`,
+      borderRadius: 12, overflow: 'hidden',
+      fontFamily: "'DM Mono','JetBrains Mono',monospace",
+      transition: 'border-color 0.3s',
+      flex: 1,
+    }}>
+      {/* chrome */}
+      <div style={{ padding: '10px 14px', borderBottom: '0.5px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           {['#C0392B','#D4A853','#2A6347'].map(c => (
-            <div key={c} style={{ width: 10, height: 10, borderRadius: '50%', background: c, opacity: 0.8 }} />
+            <div key={c} style={{ width: 9, height: 9, borderRadius: '50%', background: c, opacity: active ? 0.9 : 0.4 }} />
           ))}
-          <span style={{ fontSize: 10, color: '#5A5A52', marginLeft: 8, letterSpacing: '0.08em' }}>sui-walrus — bash</span>
+          <span style={{ fontSize: 10, color: '#5A5A52', marginLeft: 6, letterSpacing: '0.07em' }}>{step.filename}</span>
         </div>
-        {/* lines */}
-        <div style={{ padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: 2 }}>
-          {TERMINAL_LINES.slice(0, shown).map((l, i) => (
-            <div key={i} style={{
-              fontSize: 12, color: l.color, lineHeight: 1.75,
-              animation: 'lpFadeUp 0.28s cubic-bezier(0.22,1,0.36,1) both',
-            }}>
-              {l.text}
-              {i === shown - 1 && shown < TERMINAL_LINES.length && (
-                <span style={{ display: 'inline-block', width: 6, height: 13, background: '#ECEAE4', marginLeft: 2, opacity: cursor ? 1 : 0, verticalAlign: 'text-bottom' }} />
-              )}
-            </div>
-          ))}
-          {shown === TERMINAL_LINES.length && (
-            <div style={{ fontSize: 12, color: '#ECEAE4', lineHeight: 1.75 }}>
-              $ <span style={{ display: 'inline-block', width: 6, height: 13, background: '#ECEAE4', marginLeft: 2, opacity: cursor ? 1 : 0, verticalAlign: 'text-bottom' }} />
-            </div>
-          )}
-        </div>
+        <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, letterSpacing: '0.12em', color: active ? step.tagColor : '#3A3A34', border: `0.5px solid ${active ? step.tagColor + '60' : '#3A3A34'}`, borderRadius: 4, padding: '2px 7px', transition: 'all 0.3s' }}>{step.tag}</span>
       </div>
-
-      {/* ── code snippet ── */}
-      <div style={{
-        background: '#0E0E0C', border: '0.5px solid rgba(255,255,255,0.12)',
-        borderRadius: 12, overflow: 'hidden', fontFamily: "'DM Mono', 'JetBrains Mono', monospace",
-        opacity: shown >= 9 ? 1 : 0.25,
-        transition: 'opacity 0.6s ease',
-      }}>
-        <div style={{ padding: '10px 14px', borderBottom: '0.5px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-            {['#C0392B','#D4A853','#2A6347'].map(c => (
-              <div key={c} style={{ width: 10, height: 10, borderRadius: '50%', background: c, opacity: 0.8 }} />
-            ))}
-            <span style={{ fontSize: 10, color: '#5A5A52', marginLeft: 8, letterSpacing: '0.08em' }}>lib/tatum.ts</span>
+      {/* lines */}
+      <div style={{ padding: '14px 18px', minHeight: 148, display: 'flex', flexDirection: 'column', gap: 1 }}>
+        {step.lines.slice(0, shown).map((l, i) => (
+          <div key={i} style={{ fontSize: 11.5, color: active ? l.color : '#3A3A34', lineHeight: 1.8, animation: 'lpFadeUp 0.25s cubic-bezier(0.22,1,0.36,1) both', transition: 'color 0.4s' }}>
+            {l.text}
+            {i === shown - 1 && !done && (
+              <span style={{ display: 'inline-block', width: 5, height: 12, background: '#ECEAE4', marginLeft: 2, opacity: cursor ? 1 : 0, verticalAlign: 'text-bottom' }} />
+            )}
           </div>
-          <span style={{ fontSize: 9, color: '#2A6347', letterSpacing: '0.1em', border: '0.5px solid rgba(42,99,71,0.4)', borderRadius: 4, padding: '2px 7px' }}>TYPESCRIPT</span>
-        </div>
-        <div style={{ padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: 0 }}>
-          {CODE_SNIPPET.map((line, i) => (
-            <div key={i} style={{ fontSize: 12, lineHeight: 1.8, display: 'flex', flexWrap: 'wrap' }}>
-              {line.tokens.length === 0
-                ? <span>&nbsp;</span>
-                : line.tokens.map((tok, j) => (
-                    <span key={j} style={{ color: tok.c }}>{tok.t}</span>
-                  ))
-              }
-            </div>
-          ))}
-        </div>
+        ))}
+        {done && active && (
+          <div style={{ fontSize: 11.5, color: '#ECEAE4', lineHeight: 1.8 }}>
+            $ <span style={{ display: 'inline-block', width: 5, height: 12, background: '#ECEAE4', marginLeft: 2, opacity: cursor ? 1 : 0, verticalAlign: 'text-bottom' }} />
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
-/* ── Step indicator ── */
-const STEPS = [
-  {
-    num: '01',
-    title: 'Upload to Walrus',
-    italic: 'decentralized',
-    body: 'Your file is stored as a certified blob across a network of storage nodes. 2-of-N erasure coding keeps it retrievable even if nodes go offline.',
-    tag: 'STORAGE',
-    detail: 'blobId: bAEKDJ3ma9Nz…',
-  },
-  {
-    num: '02',
-    title: 'Mint a Kiosk access pass',
-    italic: 'on Sui',
-    body: 'A Sui Kiosk object is created with your price in SUI. Buyers who pay receive a KioskOwnerCap — the on-chain proof of access.',
-    tag: 'BLOCKCHAIN',
-    detail: 'KioskOwnerCap → 0x7f3a…b12c',
-  },
-  {
-    num: '03',
-    title: 'Tatum verifies. Buyer downloads.',
-    italic: 'instantly',
-    body: 'Tatum RPC confirms the ownership transfer on Sui Mainnet. Access is granted and the blob is retrieved directly from the Walrus aggregator.',
-    tag: 'VERIFIED',
-    detail: 'Tatum RPC · Sui Mainnet ✓',
-  },
-];
-
-function StepSection() {
-  const { ref, visible } = useInView(0.12);
+/* ── Three-terminal section ── */
+function ThreeTerminals() {
+  const { ref, visible } = useInView(0.1);
   const [active, setActive] = useState(0);
+  const { w } = useViewport();
+  const mobile = w < 640;
 
   useEffect(() => {
     if (!visible) return;
-    const id = setInterval(() => setActive(a => (a + 1) % STEPS.length), 3000);
-    return () => clearInterval(id);
+    const DURATIONS = [4200, 4500, 5200];
+    let current = 0;
+    let timer: ReturnType<typeof setTimeout>;
+    const loop = () => {
+      current = (current + 1) % 3;
+      setActive(current);
+      timer = setTimeout(loop, DURATIONS[current]);
+    };
+    timer = setTimeout(loop, DURATIONS[0]);
+    return () => clearTimeout(timer);
   }, [visible]);
 
+  const s = STEP_TERMINALS[active];
+
   return (
-    <section ref={ref as React.RefObject<HTMLElement>} style={{
-      background: '#0E0E0C', padding: 'clamp(4rem,8vw,6rem) clamp(1.25rem,5vw,2.5rem)',
+    <section ref={ref as React.RefObject<HTMLElement>} id="how" style={{
+      background: '#0E0E0C',
+      padding: mobile
+        ? '3rem 1.25rem 2.5rem'
+        : 'clamp(4rem,8vw,6rem) clamp(1.25rem,5vw,2.5rem)',
     }}>
-      <p style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#5A5A52', marginBottom: '1.5rem' }}>
+      <p style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#5A5A52', marginBottom: '1rem' }}>
         02 — HOW IT WORKS
       </p>
       <h2 style={{
         fontFamily: "'Cormorant Garamond', Georgia, serif",
-        fontSize: 'clamp(36px,5vw,60px)', fontWeight: 600, lineHeight: 0.96, letterSpacing: '-0.02em',
-        color: '#ECEAE4', marginBottom: 'clamp(3rem,6vw,5rem)',
+        fontSize: mobile ? 36 : 'clamp(36px,5vw,60px)',
+        fontWeight: 600, lineHeight: 0.96, letterSpacing: '-0.02em',
+        color: '#ECEAE4', marginBottom: mobile ? '1.75rem' : 'clamp(2rem,4vw,3rem)',
       }}>
         Three steps.<br /><em style={{ color: '#D4A853', fontStyle: 'italic' }}>Zero middlemen.</em>
       </h2>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: '1rem', maxWidth: 1100, margin: '0 auto' }}>
-        {STEPS.map((s, i) => (
-          <div
-            key={i}
-            onClick={() => setActive(i)}
-            style={{
-              background: active === i ? '#1A1A17' : '#0E0E0C',
-              border: `0.5px solid ${active === i ? 'rgba(31,74,53,0.6)' : 'rgba(255,255,255,0.08)'}`,
-              borderRadius: 12, padding: '1.75rem', cursor: 'pointer',
-              transition: 'all 0.35s cubic-bezier(0.22,1,0.36,1)',
-              transform: visible ? 'translateY(0)' : 'translateY(24px)',
-              opacity: visible ? 1 : 0,
-              transitionDelay: `${i * 0.12}s`,
-              borderTop: active === i ? '2px solid #1F4A35' : '0.5px solid rgba(255,255,255,0.08)',
-            }}
-          >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem' }}>
-              <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 28, fontWeight: 400, color: active === i ? '#2A6347' : '#3A3A34', lineHeight: 1 }}>{s.num}</span>
-              <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, letterSpacing: '0.15em', color: active === i ? '#2A6347' : '#3A3A34', border: `0.5px solid ${active === i ? '#2A6347' : '#3A3A34'}`, borderRadius: 4, padding: '2px 7px' }}>{s.tag}</span>
-            </div>
-            <h3 style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
-              fontSize: 22, fontWeight: 500, color: '#ECEAE4', lineHeight: 1.2, marginBottom: '0.75rem',
-            }}>
-              {s.title.replace(s.italic, '')}<em style={{ color: '#D4A853', fontStyle: 'italic' }}>{s.italic}</em>
-            </h3>
-            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 15, color: '#9A9A8E', lineHeight: 1.65, marginBottom: '1.25rem' }}>
-              {s.body}
-            </p>
-            <div style={{
-              fontFamily: "'DM Mono',monospace", fontSize: 10, color: '#2A6347',
-              background: 'rgba(31,74,53,0.08)', borderLeft: '2px solid rgba(31,74,53,0.35)',
-              padding: '6px 10px', borderRadius: '0 4px 4px 0',
-              opacity: active === i ? 1 : 0.4, transition: 'opacity 0.3s',
-            }}>
-              {s.detail}
-            </div>
-          </div>
+      {/* step tab pills — scrollable on mobile */}
+      <div className="lp-pill-row" style={{
+        display: 'flex', gap: '0.5rem', marginBottom: '1rem',
+        overflowX: 'auto', paddingBottom: 4,
+      }}>
+        {STEP_TERMINALS.map((st, i) => (
+          <button key={i} onClick={() => setActive(i)} style={{
+            display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0,
+            background: active === i ? 'rgba(255,255,255,0.05)' : 'transparent',
+            border: `0.5px solid ${active === i ? st.tagColor + '60' : 'rgba(255,255,255,0.08)'}`,
+            borderRadius: 8, padding: '6px 12px', cursor: 'pointer', fontFamily: 'inherit',
+            transition: 'all 0.2s',
+          }}>
+            <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: active === i ? st.tagColor : '#3A3A34' }}>{st.num}</span>
+            <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 11, color: active === i ? '#ECEAE4' : '#5A5A52', whiteSpace: 'nowrap' }}>{st.label}</span>
+          </button>
         ))}
       </div>
 
-      {/* connecting progress bar */}
-      <div style={{ maxWidth: 1100, margin: '2rem auto 0', display: 'flex', alignItems: 'center', gap: 0 }}>
-        {STEPS.map((_, i) => (
+      {/* MOBILE: show only active terminal full-width */}
+      {mobile ? (
+        <div style={{
+          opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(20px)',
+          transition: 'opacity 0.5s, transform 0.5s cubic-bezier(0.22,1,0.36,1)',
+        }}>
+          <StepTerminal step={s} active={true} />
+        </div>
+      ) : (
+        /* DESKTOP: all 3 side by side */
+        <div style={{
+          display: 'flex', gap: '0.875rem', alignItems: 'stretch',
+          opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(24px)',
+          transition: 'opacity 0.6s ease, transform 0.6s cubic-bezier(0.22,1,0.36,1)',
+        }}>
+          {STEP_TERMINALS.map((st, i) => (
+            <StepTerminal key={i} step={st} active={active === i} />
+          ))}
+        </div>
+      )}
+
+      {/* progress dots + label */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 0, marginTop: '1.25rem', maxWidth: 280 }}>
+        {STEP_TERMINALS.map((st, i) => (
           <div key={i} style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-            <div style={{
-              width: 8, height: 8, borderRadius: '50%', flexShrink: 0,
-              background: active >= i ? '#1F4A35' : '#3A3A34',
-              transition: 'background 0.35s',
+            <div onClick={() => setActive(i)} style={{
+              width: 7, height: 7, borderRadius: '50%', flexShrink: 0, cursor: 'pointer',
+              background: active === i ? st.tagColor : '#3A3A34',
+              transition: 'background 0.3s',
             }} />
-            {i < STEPS.length - 1 && (
+            {i < 2 && (
               <div style={{ flex: 1, height: 1, background: '#3A3A34', position: 'relative', overflow: 'hidden' }}>
-                <div style={{
-                  position: 'absolute', inset: 0,
-                  background: '#1F4A35',
-                  transform: active > i ? 'scaleX(1)' : 'scaleX(0)',
-                  transformOrigin: 'left',
-                  transition: 'transform 0.5s cubic-bezier(0.22,1,0.36,1)',
-                }} />
+                <div style={{ position: 'absolute', inset: 0, background: STEP_TERMINALS[i].tagColor, transform: active > i ? 'scaleX(1)' : 'scaleX(0)', transformOrigin: 'left', transition: 'transform 0.5s cubic-bezier(0.22,1,0.36,1)' }} />
               </div>
+            )}
+          </div>
+        ))}
+        <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: '#5A5A52', marginLeft: 10, whiteSpace: 'nowrap' }}>
+          {STEP_TERMINALS[active].label}
+        </span>
+      </div>
+
+      {/* active step description — single card on mobile */}
+      <div style={{
+        marginTop: '1.5rem',
+        display: mobile ? 'block' : 'grid',
+        gridTemplateColumns: mobile ? undefined : 'repeat(3,1fr)',
+        gap: '0.75rem',
+      }}>
+        {STEP_TERMINALS.map((st, i) => (
+          <div key={i} style={{
+            padding: mobile && active !== i ? 0 : '1rem',
+            maxHeight: mobile && active !== i ? 0 : 200,
+            overflow: 'hidden',
+            borderRadius: 10,
+            background: active === i ? 'rgba(255,255,255,0.04)' : 'transparent',
+            border: `0.5px solid ${active === i ? st.tagColor + '30' : 'transparent'}`,
+            transition: 'all 0.35s',
+            opacity: active === i ? 1 : mobile ? 0 : 0.32,
+            marginBottom: mobile && active === i ? '0.5rem' : 0,
+          }}>
+            {(!mobile || active === i) && (
+              <>
+                <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, color: st.tagColor, letterSpacing: '0.12em', marginBottom: '0.4rem' }}>{st.num} — {st.tag}</div>
+                <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: mobile ? 18 : 16, fontWeight: 500, color: '#ECEAE4', lineHeight: 1.25, marginBottom: '0.4rem' }}>
+                  {st.title} <em style={{ color: st.tagColor, fontStyle: 'italic' }}>{st.italic}</em>
+                </div>
+                <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: mobile ? 15 : 13, color: '#9A9A8E', lineHeight: 1.6 }}>{st.body}</div>
+              </>
             )}
           </div>
         ))}
@@ -258,6 +274,7 @@ function StepSection() {
     </section>
   );
 }
+
 
 /* ── Feature cards ── */
 const FEATURES = [
@@ -306,7 +323,7 @@ function FeatureSection() {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: '1rem', maxWidth: 1100, margin: '0 auto' }}>
         {FEATURES.map((f, i) => (
-          <div key={i} style={{
+          <div key={i} className="lp-feature-card" style={{
             background: '#FFFFFF', border: '0.5px solid rgba(0,0,0,0.10)',
             borderRadius: 12, padding: '1.75rem',
             transform: visible ? 'translateY(0)' : 'translateY(20px)',
@@ -314,7 +331,7 @@ function FeatureSection() {
             transition: `transform 0.55s cubic-bezier(0.22,1,0.36,1) ${i * 0.1}s, opacity 0.55s ease ${i * 0.1}s`,
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-              <span style={{ fontSize: 24 }}>{f.icon}</span>
+              <span className="lp-feature-icon" style={{ fontSize: 24 }}>{f.icon}</span>
               <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, letterSpacing: '0.12em', color: '#7A7A70', border: '0.5px solid rgba(0,0,0,0.15)', borderRadius: 4, padding: '2px 7px' }}>{f.tag}</span>
             </div>
             <h3 style={{
@@ -520,6 +537,8 @@ function CtaSection() {
 export default function LandingPage() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { w } = useViewport();
+  const mobile = w < 640;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -592,9 +611,37 @@ export default function LandingPage() {
 
         .lp-step-card:hover { border-color: rgba(31,74,53,0.4) !important; }
 
-        @media (max-width: 768px) {
-          .lp-nav-links { display: none; }
-          .lp-nav-ghost  { display: none; }
+        .lp-pill-row::-webkit-scrollbar { display: none; }
+        .lp-pill-row { scrollbar-width: none; -ms-overflow-style: none; }
+
+        /* Feature card hover */
+        .lp-feature-card {
+          transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s cubic-bezier(0.22,1,0.36,1), border-color 0.3s ease;
+          will-change: transform;
+        }
+        .lp-feature-card:hover {
+          transform: translateY(-5px) scale(1.012);
+          box-shadow: 0 16px 40px rgba(0,0,0,0.10), 0 4px 12px rgba(31,74,53,0.08);
+          border-color: rgba(31,74,53,0.25) !important;
+        }
+        .lp-feature-card:hover .lp-feature-icon {
+          transform: scale(1.15) rotate(-4deg);
+        }
+        .lp-feature-icon {
+          display: inline-block;
+          transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+        }
+
+        @media (max-width: 639px) {
+          .lp-feature-card:hover {
+            transform: none;
+            box-shadow: none;
+          }
+        }
+        @media (max-width: 639px) {
+          .lp-audience-grid { grid-template-columns: 1fr !important; }
+          .lp-feature-grid  { grid-template-columns: 1fr !important; }
+          .lp-stats-grid    { grid-template-columns: 1fr 1fr !important; }
         }
       `}</style>
 
@@ -606,7 +653,7 @@ export default function LandingPage() {
           background: scrolled ? 'rgba(236,234,228,0.94)' : '#ECEAE4',
           backdropFilter: scrolled ? 'blur(16px)' : 'none',
           borderBottom: '0.5px solid rgba(0,0,0,0.08)',
-          padding: '0.875rem 2.5rem',
+          padding: mobile ? '0.75rem 1.25rem' : '0.875rem 2.5rem',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           transition: 'background 0.2s, backdrop-filter 0.2s',
         }}>
@@ -630,38 +677,47 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="lp-nav-links" style={{ display: 'flex', gap: '2rem' }}>
-            {[['#how', 'How it works'], ['#stack', 'The stack'], ['#who', 'Who it\'s for']].map(([href, label]) => (
-              <a key={href} href={href} className="lp-nav-link">{label}</a>
-            ))}
-          </div>
+          {!mobile && (
+            <div style={{ display: 'flex', gap: '2rem' }}>
+              {[['#how', 'How it works'], ['#stack', 'The stack'], ['#who', 'Who it\'s for']].map(([href, label]) => (
+                <a key={href} href={href} className="lp-nav-link">{label}</a>
+              ))}
+            </div>
+          )}
 
-          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <Link href="/marketplace" className="lp-btn-solid">Open App ↗</Link>
-          </div>
+          <Link href="/marketplace" className="lp-btn-solid" style={{ padding: mobile ? '0.55rem 1.1rem' : undefined, fontSize: mobile ? 13 : undefined }}>
+            Open App ↗
+          </Link>
         </nav>
 
         {/* ── HERO (light) ── */}
         <section style={{
           background: '#ECEAE4',
-          padding: 'clamp(4rem,8vw,7rem) clamp(1.25rem,5vw,2.5rem) clamp(3rem,6vw,5rem)',
+          padding: mobile
+            ? '2.5rem 1.25rem 2rem'
+            : 'clamp(4rem,8vw,7rem) clamp(1.25rem,5vw,2.5rem) clamp(3rem,6vw,5rem)',
         }}>
           <p style={{
             fontFamily: "'DM Mono',monospace", fontSize: 10, letterSpacing: '0.15em',
-            textTransform: 'uppercase', color: '#7A7A70', marginBottom: '1.5rem',
+            textTransform: 'uppercase', color: '#7A7A70', marginBottom: '1rem',
             animation: 'lpFadeUp 0.55s cubic-bezier(0.22,1,0.36,1) both',
           }}>
             01 — DECENTRALIZED FILE MARKETPLACE
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))', gap: 'clamp(2rem,5vw,4rem)', alignItems: 'start', maxWidth: 1200, margin: '0 auto' }}>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: mobile ? '1fr' : 'repeat(auto-fit,minmax(300px,1fr))',
+            gap: mobile ? '1.5rem' : 'clamp(2rem,5vw,4rem)',
+            alignItems: 'start', maxWidth: 1200, margin: '0 auto',
+          }}>
             {/* left */}
             <div>
               <h1 style={{
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
-                fontSize: 'clamp(48px,7vw,88px)', fontWeight: 600,
-                lineHeight: 0.95, letterSpacing: '-0.02em', color: '#1C1C1A',
-                marginBottom: '1.5rem',
+                fontSize: mobile ? 'clamp(44px,12vw,60px)' : 'clamp(48px,7vw,88px)',
+                fontWeight: 600, lineHeight: 0.95, letterSpacing: '-0.02em', color: '#1C1C1A',
+                marginBottom: '1.25rem',
                 animation: 'lpFadeUp 0.55s cubic-bezier(0.22,1,0.36,1) 0.08s both',
               }}>
                 Sell files.<br />
@@ -669,8 +725,8 @@ export default function LandingPage() {
               </h1>
               <p style={{
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
-                fontSize: 18, color: '#4A4A42', lineHeight: 1.7,
-                maxWidth: '34ch', marginBottom: '2rem',
+                fontSize: mobile ? 16 : 18, color: '#4A4A42', lineHeight: 1.65,
+                maxWidth: '34ch', marginBottom: '1.5rem',
                 animation: 'lpFadeUp 0.55s cubic-bezier(0.22,1,0.36,1) 0.16s both',
               }}>
                 Upload to Walrus. Gate access with a Sui Kiosk object.
@@ -678,24 +734,26 @@ export default function LandingPage() {
                 <em style={{ fontStyle: 'italic' }}> Just the network.</em>
               </p>
               <div style={{
-                display: 'flex', gap: '0.875rem', flexWrap: 'wrap',
+                display: 'flex', gap: '0.75rem', flexWrap: 'wrap',
                 animation: 'lpFadeUp 0.55s cubic-bezier(0.22,1,0.36,1) 0.24s both',
               }}>
                 <Link href="/marketplace" style={{
                   display: 'inline-flex', alignItems: 'center', gap: 8,
                   background: '#1F4A35', color: '#ECEAE4', textDecoration: 'none',
-                  border: 'none', borderRadius: 50, padding: '0.9rem 2rem',
-                  fontFamily: "'DM Mono',monospace", fontSize: 13, cursor: 'pointer',
-                  letterSpacing: '0.02em', transition: 'background 0.15s',
+                  border: 'none', borderRadius: 50,
+                  padding: mobile ? '0.75rem 1.5rem' : '0.9rem 2rem',
+                  fontFamily: "'DM Mono',monospace", fontSize: mobile ? 12 : 13,
+                  cursor: 'pointer', letterSpacing: '0.02em', transition: 'background 0.15s',
                 }}>
                   Start selling ↗
                 </Link>
                 <a href="#how" style={{
                   display: 'inline-flex', alignItems: 'center', gap: 8,
                   background: 'transparent', color: '#4A4A42', textDecoration: 'none',
-                  border: '0.5px solid rgba(0,0,0,0.2)', borderRadius: 50, padding: '0.9rem 2rem',
-                  fontFamily: "'DM Mono',monospace", fontSize: 13, cursor: 'pointer',
-                  letterSpacing: '0.02em', transition: 'border-color 0.15s',
+                  border: '0.5px solid rgba(0,0,0,0.2)', borderRadius: 50,
+                  padding: mobile ? '0.75rem 1.5rem' : '0.9rem 2rem',
+                  fontFamily: "'DM Mono',monospace", fontSize: mobile ? 12 : 13,
+                  cursor: 'pointer', letterSpacing: '0.02em', transition: 'border-color 0.15s',
                 }}>
                   See how it works
                 </a>
@@ -703,27 +761,41 @@ export default function LandingPage() {
 
               {/* trust strip */}
               <div style={{
-                marginTop: '2.5rem', display: 'flex', gap: '1.5rem', flexWrap: 'wrap',
+                marginTop: '1.75rem', display: 'flex', gap: '1.25rem', flexWrap: 'wrap',
                 animation: 'lpFadeUp 0.55s cubic-bezier(0.22,1,0.36,1) 0.32s both',
               }}>
                 {[['🌊','Walrus Storage'],['🔵','Sui Mainnet'],['⚡','Tatum RPC']].map(([ic, label]) => (
-                  <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                    <span style={{ fontSize: 13 }}>{ic}</span>
+                  <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+                    <span style={{ fontSize: 12 }}>{ic}</span>
                     <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: '#7A7A70', letterSpacing: '0.06em' }}>{label}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* right — terminal */}
-            <div style={{ animation: 'lpFadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.2s both' }}>
-              <Terminal />
-            </div>
+            {/* right — mini terminal previews (desktop only) */}
+            {!mobile && (
+              <div style={{ animation: 'lpFadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.2s both', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                {STEP_TERMINALS.map((s, i) => (
+                  <div key={i} style={{ background: '#0E0E0C', border: `0.5px solid ${s.tagColor}33`, borderLeft: `2px solid ${s.tagColor}`, borderRadius: 8, padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: s.tagColor, flexShrink: 0 }}>{s.num}</span>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, color: '#5A5A52', marginBottom: 3, letterSpacing: '0.08em' }}>{s.tag}</div>
+                      <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 11, color: '#9A9A8E', lineHeight: 1.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.lines[0].text}</div>
+                      <div style={{ fontFamily: "'DM Mono',monospace", fontSize: 11, color: s.tagColor, marginTop: 2 }}>✓ {s.label}</div>
+                    </div>
+                  </div>
+                ))}
+                <a href="#how" style={{ fontFamily: "'DM Mono',monospace", fontSize: 11, color: '#5A5A52', textDecoration: 'none', textAlign: 'center', paddingTop: 4, letterSpacing: '0.06em' }}>
+                  see it live ↓
+                </a>
+              </div>
+            )}
           </div>
         </section>
 
-        {/* ── HOW IT WORKS (dark) ── */}
-        <div id="how"><StepSection /></div>
+        {/* ── HOW IT WORKS — 3 terminals (dark) ── */}
+        <ThreeTerminals />
 
         {/* ── THE STACK (light) ── */}
         <div id="stack"><FeatureSection /></div>
